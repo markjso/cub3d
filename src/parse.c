@@ -12,16 +12,6 @@
 
 #include "cub3d.h"
 
-// static void	validation(t_mlx *c)
-// {
-// 	if (!c->map.map || !*c->map.map || !c->map.map[0])
-// 		quit("INVALID MAP", c);
-// 	if (c->player.p_element != 1)
-// 		quit("PLAYER MISSING OR TOO MANY PLAYERS", c);
-// 	if (c->map.valid == false)
-// 		quit("INVALID MAP - MISSING AN ELEMENT", c);
-// }
-
 int ft_max_width(int a, int b)
 {
 	int	z;
@@ -40,13 +30,20 @@ void read_map(t_map *map, int fd)
 	char	*line;
 
 	map->height = 0;
-	i = 0;
-
+	map->map = (char **)ft_calloc(1, sizeof(char *));
 	while ((line = get_next_line(fd)))
 	{
 		check_valid_line(line);
-		line = ft_strtrim(line, "\n");
-		map->map = (char **)realloc(map->map, (map->height + 1) * sizeof(char *));
+		line = ft_strtrim(line, "\n");	
+		char **tmp = (char **)ft_calloc(map->height + 1, sizeof(char *));
+		i = 0;
+		while (i < map->height)
+		{
+			tmp[i] = map->map[i];
+			++i;
+		}
+		free(map->map);
+		map->map = tmp;
 		if (line[0] == ' ' || ft_isdigit(line[0]))
 		{
 			map->map[map->height] = ft_strdup(line);
@@ -62,8 +59,10 @@ t_map	map_parser(char *path)
 {
 	int	fd;
 	t_map	map;
+
+	init_map(&map);
 	if (check_file_format(path, ".cub"))
-		error_mess("INCORRECT FILE FORMAT, MUST BE .CUB");
+		error_mess("Incorrect file format, must be .cub");
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
 		perror("FILE: ");
@@ -71,9 +70,8 @@ t_map	map_parser(char *path)
 	read_map(&map, fd);
 	close(fd);
 	validate_chr(map);
-	printf("able to validate_chr map\n");
-	printf("map_width is %d\n", map.width);
-	printf("map_height is %d\n", map.height);
+	check_walls(map);
+	find_player(&map);
 	return (map);
 }
 

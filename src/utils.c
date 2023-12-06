@@ -68,20 +68,6 @@ void	ft_free_strs(char **strs)
 	free(strs);
 }
 
-void	ft_clean_arr(char **arr)
-{
-	size_t	i;
-
-	i = 0;
-	if (arr != NULL)
-	{
-		while (arr[i])
-			free(arr[i++]);
-	}
-	free(arr);
-	arr = NULL;
-}
-
 int	dir_from_id(char *identifier)
 {
 	if (ft_strncmp(identifier, "NO ", 3) == 0)
@@ -94,3 +80,13 @@ int	dir_from_id(char *identifier)
 		return (DIR_EAST);
 	return (-1);
 }
+
+double	ft_abs(double x)
+{
+	if (x < 0)
+		return (-x);
+	return (x);
+}
+
+
+

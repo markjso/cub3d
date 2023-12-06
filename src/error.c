@@ -19,39 +19,39 @@ void	error_mess(char *msg)
 	exit(EXIT_FAILURE);
 }
 
+void	ft_clean_arr(char **arr)
+{
+	size_t	i;
+
+	i = 0;
+	if (arr != NULL)
+	{
+		while (arr[i])
+			free(arr[i++]);
+	}
+	free(arr);
+	arr = NULL;
+}
+
 int	quit(char *msg, t_mlx *cube)
 {
 	printf("Error\n%s\n", msg);
 	ft_clean_arr(cube->map.map);
-	// if (cube->elements.no)
-	// 	free(cube->elements.no);
-	// if (cube->elements.so)
-	// 	free(cube->elements.so);
-	// if (cube->elements.ea)
-	// 	free(cube->elements.ea);
-	// if (cube->elements.we)
-	// 	free(cube->elements.we);
-	// if (cube->win)
-	// {
-	// 	mlx_clear_window(cube->mlx, cube->ptr);
-	// 	mlx_destroy_window(cube->mlx, cube->ptr);
-	// }
+	if (cube->win)
+	{
+		mlx_clear_window(cube->mlx, cube->win);
+		mlx_destroy_window(cube->mlx, cube->win);
+	}
 	exit(EXIT_FAILURE);
-	return (true);
 }
 
 int	leave(t_mlx *cube)
 {
 	ft_clean_arr(cube->map.map);
-	// free(cube->elements.no);
-	// free(cube->elements.so);
-	// free(cube->elements.ea);
-	// free(cube->elements.we);
-	// if (cube->win)
-	// {
+	if (cube->win)
+	{
 		mlx_clear_window(cube->mlx, cube->win);
 		mlx_destroy_window(cube->mlx, cube->win);
-	// }
+	}
 	exit(EXIT_SUCCESS);
-	return (true);
 }

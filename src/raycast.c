@@ -12,15 +12,17 @@
 
 #include "cub3d.h"
 
-static void	ft_init_ray_directions(t_mlx *cube, int x)
+static void	calc_ray_directions(t_mlx *cube, int x)
 {
 	t_raycast	*ray;
+	double 		camera_x;
 
 	ray = &cube->raycast;
-	ray->ray_dir_x = cube->player.dir_x + cube->player.plane_x * \
-		(2 * x / (double)WIN_WIDTH - 1);
-	ray->ray_dir_y = cube->player.dir_y + cube->player.plane_y * \
-		(2 * x / (double)WIN_WIDTH - 1);
+	camera_x = (2 * x / (double)WIN_WIDTH - 1);
+	ray->ray_dir_x = cube->player.dir_x + cube->player.plane_x 
+			* camera_x;
+	ray->ray_dir_y = cube->player.dir_y + cube->player.plane_y
+			* camera_x;
 	ray->map_x = (int) cube->player.pos_x;
 	ray->map_y = (int) cube->player.pos_y;
 	if (ray->ray_dir_x == 0)
@@ -33,7 +35,7 @@ static void	ft_init_ray_directions(t_mlx *cube, int x)
 		ray->delta_dist_y = ft_abs(1 / ray->ray_dir_y);
 }
 
-static void	ft_init_dda_algorithm(t_mlx *cube)
+static void	calculate_dda(t_mlx *cube)
 {
 	t_raycast	*ray;
 
@@ -62,36 +64,36 @@ static void	ft_init_dda_algorithm(t_mlx *cube)
 	}
 }
 
-void	ft_apply_dda_algorithm(t_mlx *cube)
+void	perform_dda(t_mlx *cube)
 {
 	t_raycast	*ray;
 
 	ray = &cube->raycast;
-	ray->wall_hit = false;
+	ray->wall_hit = 0;
 	while (!ray->wall_hit)
 	{
 		if (ray->side_dist_x < ray->side_dist_y)
 		{
 			ray->side_dist_x += ray->delta_dist_x;
 			ray->map_x += ray->step_x;
-			ray->hit = false;
+			ray->side = 0;
 		}
 		else
 		{
 			ray->side_dist_y += ray->delta_dist_y;
 			ray->map_y += ray->step_y;
-			ray->hit = true;
+			ray->side = 1;
 		}
 		if (cube->map.map[ray->map_x][ray->map_y] == '1')
-			ray->wall_hit = true;
+			ray->wall_hit = 1;
 	}
-	if (!ray->hit)
+	if (!ray->side)
 		ray->perp_wall_dist = ray->side_dist_x - ray->delta_dist_x;
 	else
 		ray->perp_wall_dist = ray->side_dist_y - ray->delta_dist_y;
 }
 
-static void	ft_calc_line_height(t_mlx *cube)
+static void	calc_line_height(t_mlx *cube)
 {
 	t_raycast	*ray;
 
@@ -112,10 +114,10 @@ void	ft_raycast(t_mlx *cube)
 	x = -1;
 	while (++x < WIN_WIDTH)
 	{
-		ft_init_ray_directions(cube, x);
-		ft_init_dda_algorithm(cube);
-		ft_apply_dda_algorithm(cube);
-		ft_calc_line_height(cube);
+		calc_ray_directions(cube, x);
+		calculate_dda(cube);
+		perform_dda(cube);
+		calc_line_height(cube);
 		draw_textures(cube, x);
 	}
 }

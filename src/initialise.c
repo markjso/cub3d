@@ -12,38 +12,43 @@
 
 #include "cub3d.h"
 
-void	init_map(t_mlx *cube)
+void	init_map(t_map *map)
 {
-	cube->map.height = 0;
-	cube->map.width = 0;
-	cube->map.rows = 0;
-	cube->map.cols = 0;
-	cube->map.valid = false;
+	map->height = 0;
+	map->width = 0;
+	map->player_x = 0;
+	map->player_y = 0;
+	map->player_dir = 0;
+	map->p_element = 0;
+	map->valid = false;
 }
 
-void	init_raycast(t_mlx *cube)
+t_raycast	init_raycast()
 {
-	cube->raycast.ray_dir_x = 0;
-	cube->raycast.ray_dir_y = 0;
-	cube->raycast.line_height = 0;
-	cube->raycast.draw_from = 0;
-	cube->raycast.draw_to = 0;
-	cube->raycast.map_x = 0;
-	cube->raycast.map_y = 0;
-	cube->raycast.tex_x = 0;
-	cube->raycast.tex_y = 0;
-	cube->raycast.tex_step = 0;
-	cube->raycast.tex_pos = 0;
-	cube->raycast.tex_wall_x = 0;
-	cube->raycast.side_dist_x = 0;
-	cube->raycast.side_dist_y = 0;
-	cube->raycast.delta_dist_x = 0;
-	cube->raycast.delta_dist_y = 0;
-	cube->raycast.perp_wall_dist = 0;
-	cube->raycast.step_x = 0;
-	cube->raycast.step_y = 0;
-	cube->raycast.hit = false;
-	cube->raycast.wall_hit = false;
+	t_raycast	ray;
+
+	ray.ray_dir_x = 0;
+	ray.ray_dir_y = 0;
+	ray.line_height = 0;
+	ray.draw_from = 0;
+	ray.draw_to = 0;
+	ray.map_x = 0;
+	ray.map_y = 0;
+	ray.tex_x = 0;
+	ray.tex_y = 0;
+	ray.tex_step = 0;
+	ray.tex_pos = 0;
+	ray.tex_wall_x = 0;
+	ray.side_dist_x = 0;
+	ray.side_dist_y = 0;
+	ray.delta_dist_x = 0;
+	ray.delta_dist_y = 0;
+	ray.perp_wall_dist = 0;
+	ray.step_x = 0;
+	ray.step_y = 0;
+	ray.side = 0;
+	ray.wall_hit = 0;
+	return (ray);
 }
 
 t_mlx	*init_mlx(char *filepath)
@@ -58,12 +63,7 @@ t_mlx	*init_mlx(char *filepath)
 	cube->img = mlx_new_image(cube->mlx, WIN_WIDTH, WIN_HEIGHT);
 	cube->addr = mlx_get_data_addr(cube->img, &cube->bits_per_pixel, \
 		&cube->line_length, &cube->endian);
-	init_map(cube);
 	cube->elements = parse_elements(cube, filepath);
-	printf("able to parse elements\n");
 	cube->map = map_parser(filepath);
-	printf("able to parse map\n");
-	init_player(cube);
-	printf("able to initalise player\n");
 	return (cube);
 }

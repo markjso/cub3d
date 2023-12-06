@@ -19,10 +19,9 @@ int	main(int argc, char **argv)
 	if (argc != 2)
 		error_mess("INVALID NUMBER OF ARGUMENTS");
 	cube = init_mlx(argv[1]);
-	printf("cube initalised\n");
-	// init_map(cube);
-	// init_raycast(cube);
-	// ft_img_renderer(cube);
+	cube->player = init_player(cube->map);
+	cube->raycast = init_raycast();	
+	img_renderer(cube);
 	mlx_hook(cube->win, 2, 1L << 0, keypress, cube);
 	mlx_hook(cube->win, 17, 0, leave, cube);
 	mlx_loop(cube->mlx);

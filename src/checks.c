@@ -23,23 +23,6 @@ int	check_file_format(char *file, char *file_format)
 	return (1);
 }
 
-void	set_player(int i, int j, t_mlx *cube)
-{
-	if (cube->player.p_element != 1)
-		quit("NO PLAYER OR TOO MANY PLAYERS DETECTED\n", cube);
-	cube->player.pos_x = (double)j;
-	cube->player.pos_y = (double)i;
-}
-
-static bool	is_valid_map_char(char c)
-{
-	if (c == '0' || c == '1' || c == 'N' || c == 'S' || c == 'E' || c == 'W')
-		return (true);
-		printf("true\n");
-	return (false);
-	printf("false\n");
-}
-
 bool	validate_chr(t_map map)
 {
 	int	i;
@@ -51,94 +34,42 @@ bool	validate_chr(t_map map)
 		j = -1;
 		while (++j < ft_strlen(map.map[i]))
 		{
-			if (!is_valid_map_char(map.map[i][j]))
+			if (!ft_strchr("01NSEW", map.map[i][j]))
 			{
-				error_mess("INVALID CHARACTER IN MAP FILE");
+				error_mess("Invalid character in map file");
 				return (false);
 			}
+			if (ft_strchr("NSEW", map.map[i][j]))
+				map.p_element += 1;
 		}
 	}
+	if (map.p_element != 1)
+		error_mess("No player or too many players detected");
 	return (true);
 }
 
-void	validate_map(t_mlx *cube)
+void	check_walls(t_map map)
 {
 	int	i;
 	int	j;
 
-	cube->player.p_element = 0;
-	i = -1;
-	while (cube->map.map[++i])
+	i = 0;
+	j = 0;
+	while (i < map.height)
 	{
-		j = -1;
-		while (cube->map.map[i][++j])
+		if (map.map[i][0] != '1' || map.map[i][map.width - 1] != '1')
 		{
-			if (ft_strchr("0NSEW", cube->map.map[i][j]))
-			{
-				if (!check_h(cube, i, j))
-					quit("MAP IS NOT ENCLOSED BY WALLS", cube);
-				if (!check_v(cube, i, j))
-					quit("MAP IS NOT ENCLOSED BY WALLS", cube);
-			}
-			if (ft_strchr("NSEW", cube->map.map[i][j]))
-			{
-				cube->player.p_element += 1;
-				set_player(i, j, cube);
-			}
+			error_mess("Missing wall/s on the left or right.");
 		}
+		i++;
+	}
+	while (j < map.width)
+	{
+		if (map.map[0][j] != '1' || map.map[map.height - 1][j] != '1')
+		{
+			error_mess("Missing wall/s on the top or bottom.");
+		}
+		j++;
 	}
 }
 
-bool	check_h(t_mlx *cube, int i, int j)
-{
-	bool	left;
-	bool	right;
-	int		k;
-
-	left = false;
-	right = false;
-	k = j;
-	while (right == false && cube->map.map[i][--k])
-	{
-		if (ft_strchr(".", cube->map.map[i][k]))
-			quit("MAP IS NOT ENCLOSED BY WALLS", cube);
-		if (ft_strchr("1", cube->map.map[i][k]))
-			right = true;
-	}
-	k = j;
-	while (left == false && cube->map.map[i][++k])
-	{
-		if (ft_strchr(".", cube->map.map[i][k]))
-			quit("MAP IS NOT ENCLOSED BY WALLS", cube);
-		if (ft_strchr("1", cube->map.map[i][k]))
-			left = true;
-	}
-	return (right && left);
-}
-
-bool	check_v(t_mlx *cube, int i, int j)
-{
-	bool	up;
-	bool	down;
-	size_t	k;
-
-	up = false;
-	down = false;
-	k = i;
-	while (up == false && cube->map.map[--k])
-	{
-		if (ft_strchr(".", cube->map.map[k][j]))
-			quit("MAP IS NOT ENCLOSED BY WALLS", cube);
-		if (ft_strchr("1", cube->map.map[k][j]))
-			up = true;
-	}
-	k = i;
-	while (down == false && cube->map.map[++k])
-	{
-		if (ft_strchr(".", cube->map.map[k][j]))
-			quit("MAP IS NOT ENCLOSED BY WALLS", cube);
-		if (ft_strchr("1", cube->map.map[k][j]))
-			down = true;
-	}
-	return (up && down);
-}

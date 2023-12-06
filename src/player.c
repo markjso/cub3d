@@ -12,47 +12,77 @@
 
 #include "cub3d.h"
 
-void	init_player_dir(t_mlx *cube, char c)
-{
-	if (c == 'N')
-		cube->player.angle = PI3 + 0.00001;
-	else if (c == 'S')
-		cube->player.angle = PI2 + 0.00001;
-	else if (c == 'E')
-		cube->player.angle = PII + 0.00001;
-	else if (c == 'W')
-		cube->player.angle = PI + 0.00001;
-	else
-		cube->player.angle = PI3 + 0.00001;
-	cube->player.dir_x = cos(cube->player.angle) * 5;
-	printf("player.dir_x is %f\n", cube->player.dir_x);
-	cube->player.dir_y = sin(cube->player.angle) * 5;
-	printf("player.dir_y is %f\n", cube->player.dir_y);
-}
-
-void	init_player(t_mlx *cube)
+void	find_player(t_map *map)
 {
 	int	i;
 	int	j;
 
 	i = -1;
-	while (++i < (int)cube->map.height)
+	while (++i < map->height)
 	{
 		j = -1;
-		while (++j < (int)cube->map.width)
+		while (++j < ft_strlen(map->map[i]))
 		{
-			if (ft_strchr("NSEW", cube->map.map[i][j]))
+			if (ft_strchr("NSEW", map->map[i][j]))
 			{
-				if (cube->map.map[i][j] == '\0')
+				if (map->map[i][j] == '\0')
 					break ;
-				cube->player.pos_x = j;
-				printf("player.pos_x is %f\n", cube->player.pos_x);
-				cube->player.pos_y = i;
-				printf("player.pos_y is %f\n", cube->player.pos_y);
-				cube->player.fov = 1;
-				init_player_dir(cube, cube->map.map[i][j]);
+				map->player_x = i;
+				map->player_y = j;
+				map->player_dir = map->map[i][j];
 				return ;
 			}
 		}
 	}
+}
+
+/* 0.66  is the 2D raycaster version of camera plane */
+
+void	assign_player_dir(t_player *player, int direction)
+{
+	if (direction == DIR_NORTH)
+	{
+		player->dir_x = -1;
+		player->dir_y = 0;
+		player->plane_y = 0.66;
+	}
+	else if (direction == DIR_SOUTH)
+	{
+		player->dir_x = 1;
+		player->dir_y = 0;
+		player->plane_y = -0.66;
+	}
+	else if (direction == DIR_EAST)
+	{
+		player->dir_x = 0;
+		player->dir_y = 1;
+		player->plane_x = 0.66;
+	}
+	else if (direction == DIR_WEST)
+	{
+		player->dir_x = 0;
+		player->dir_y = -1;
+		player->plane_x = -0.66;
+	}
+}
+
+t_player	init_player(t_map map)
+{
+	t_player	player;
+
+	player.plane_x = 0;
+	player.plane_y = 0;
+	if (map.player_dir == 'N')
+		assign_player_dir(&player, DIR_NORTH);
+	else if (map.player_dir == 'S')
+		assign_player_dir(&player, DIR_SOUTH);
+	else if (map.player_dir == 'E')
+		assign_player_dir(&player, DIR_EAST);
+	else if (map.player_dir == 'W')
+		assign_player_dir(&player, DIR_WEST);
+	player.pos_x = map.player_x + 0.5;
+	player.pos_y = map.player_y + 0.5;
+	player.old_dir_x = 0;
+	player.old_plane_x = 0;
+	return (player);
 }

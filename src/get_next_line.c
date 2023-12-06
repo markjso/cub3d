@@ -10,8 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft_ext/libft.h"
-#include "get_next_line.h"
+#include "../libft/libft.h"
 
 void	*ft_calloc(size_t nmeb, size_t size)
 {
