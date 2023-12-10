@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmount <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: rmount <rmount@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 14:07:47 by jmarks            #+#    #+#             */
-/*   Updated: 2023/12/10 13:02:41 by rmount           ###   ########.fr       */
+/*   Updated: 2023/12/11 10:00:24 by rmount           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ t_map	map_parser(char *path)
 	read_map(&map, fd);
 	close(fd);
 	validate_chr(map);
-	check_walls(map);
+	//check_walls(map);
 	find_player(&map);
 	return (map);
 }
