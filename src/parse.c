@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmarks <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: rmount <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 14:07:47 by jmarks            #+#    #+#             */
-/*   Updated: 2023/11/24 14:07:52 by jmarks           ###   ########.fr       */
+/*   Updated: 2023/12/10 13:02:41 by rmount           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,8 @@ t_map	map_parser(char *path)
 
 void	scan_map(t_mlx *cube, char *line)
 {
-	if (cube->map.width < ft_strlen(line))
-		cube->map.width = ft_strlen(line);
+	if (cube->map.width < (int)ft_strlen(line))
+		cube->map.width = (int)ft_strlen(line);
 	if (ft_add_str_to_arr(line, cube))
 	{
 		free(line);

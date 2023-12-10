@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check.c                                            :+:      :+:    :+:   */
+/*   checks.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmarks <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: rmount <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 14:06:09 by jmarks            #+#    #+#             */
-/*   Updated: 2023/11/24 14:06:11 by jmarks           ###   ########.fr       */
+/*   Updated: 2023/12/11 07:18:41 by rmount           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ bool	validate_chr(t_map map)
 	while (++i < map.height)
 	{
 		j = -1;
-		while (++j < ft_strlen(map.map[i]))
+		while (++j < (int)ft_strlen(map.map[i]))
 		{
 			if (!ft_strchr("01NSEW", map.map[i][j]))
 			{
@@ -59,6 +59,7 @@ void	check_walls(t_map map)
 	{
 		if (map.map[i][0] != '1' || map.map[i][map.width - 1] != '1')
 		{
+			printf("%i = %c, %i = %c\n", i, map.map[i][0], j, map.map[i][map.width - 1]);
 			error_mess("Missing wall/s on the left or right.");
 		}
 		i++;

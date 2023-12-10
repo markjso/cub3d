@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmarks <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: rmount <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/13 17:34:55 by jmarks            #+#    #+#             */
-/*   Updated: 2022/06/08 16:03:10 by jmarks           ###   ########.fr       */
+/*   Created: 2022/01/28 15:52:54 by rmount            #+#    #+#             */
+/*   Updated: 2022/01/28 16:57:14 by rmount           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,27 @@
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {
-	char	*dest;
-	int		i;
-	int		j;
+	unsigned int	i;
+	char			*result;
+	unsigned int	s1_len;
+	unsigned int	s2_len;
 
-	dest = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
-	if (!s1 || !s2 || !dest)
-		return (NULL);
 	i = 0;
-	j = 0;
-	while (s1[i])
+	s1_len = ft_strlen(s1);
+	s2_len = ft_strlen(s2);
+	result = (char *)malloc(sizeof(char) * s1_len + s2_len + 1);
+	if (result == NULL)
+		return (NULL);
+	while (i < s1_len)
 	{
-		dest[i] = s1[i];
+		result[i] = s1[i];
 		i++;
 	}
-	while (s2[j])
+	while (i < s2_len + s1_len)
 	{
-		dest[i] = s2[j];
+		result[i] = s2[i - s1_len];
 		i++;
-		j++;
 	}
-	dest[i] = '\0';
-	return (dest);
+	result[i] = '\0';
+	return (result);
 }

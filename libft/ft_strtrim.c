@@ -3,24 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmarks <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: rmount <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/13 19:39:02 by jmarks            #+#    #+#             */
-/*   Updated: 2022/06/08 15:28:11 by jmarks           ###   ########.fr       */
+/*   Created: 2022/02/01 13:45:26 by rmount            #+#    #+#             */
+/*   Updated: 2023/11/24 15:27:59 by rmount           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	ft_setchar(char c, char const *set)
+int	match(char c, const char *set)
 {
-	size_t	i;
+	int	i;
 
 	i = 0;
 	while (set[i])
 	{
-		if (set[i] == c)
+		if (c == set[i])
+		{
 			return (1);
+		}
 		i++;
 	}
 	return (0);
@@ -28,27 +30,25 @@ static int	ft_setchar(char c, char const *set)
 
 char	*ft_strtrim(char const *s1, char const *set)
 {
-	char	*s2;
-	size_t	i;
-	size_t	start;
-	size_t	finish;
+	int		front;
+	int		back;
+	int		i;
+	char	*result;
 
-	start = 0;
-	while (s1[start] && ft_setchar(s1[start], set))
-		start++;
-	finish = ft_strlen(s1);
-	while (finish > start && ft_setchar(s1[finish - 1], set))
-		finish--;
-	s2 = malloc(sizeof(*s1) * (finish - start + 1));
-	if (!s2)
+	if (!(s1 || set))
+		return ((char *)s1);
+	front = 0;
+	while (s1[front] && match(s1[front], set))
+		front++;
+	back = ft_strlen(s1);
+	while (back > front && match(s1[back - 1], set))
+		back--;
+	result = malloc((back - front + 1) * sizeof(*result));
+	if (!result)
 		return (NULL);
 	i = 0;
-	while (start < finish)
-	{
-		s2[i] = s1[start];
-		i++;
-		start++;
-	}
-	s2[i] = '\0';
-	return (s2);
+	while (front < back)
+		result[i++] = s1[front++];
+	result[i] = '\0';
+	return (&result[0]);
 }

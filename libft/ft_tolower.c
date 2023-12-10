@@ -3,20 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   ft_tolower.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmarks <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: rmount <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/08 11:42:25 by jmarks            #+#    #+#             */
-/*   Updated: 2022/03/08 12:27:25 by jmarks           ###   ########.fr       */
+/*   Created: 2022/01/28 15:11:05 by rmount            #+#    #+#             */
+/*   Updated: 2022/01/28 15:12:20 by rmount           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-/*
-** Converts a given letter to lowercase.
-*/
-#include "libft.h"
 
 int	ft_tolower(int c)
 {
-	if (c >= 'A' && c <= 'Z')
-		c = ((c - 'A') + 'a');
-	return (c);
+	if (c >= 65 && c <= 90)
+	{
+		return (c + ('a' - 'A'));
+	}
+	else
+	{
+		return (c);
+	}
 }
