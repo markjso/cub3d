@@ -1,4 +1,4 @@
-NAME = cub3d
+NAME = cub3D
 
 MLX_DIR = mlx
 
@@ -21,18 +21,20 @@ OBJS=$(SRC:.c=.o)
 
 CC=gcc
 
+MLX=mlx/libmlx.a
+
 LIBFT=libft/libft.a
 
 LIBFT_LIB_DIR = libft
 
-CFLAGS=-Wall -Wextra -Werror -Iincludes/ -Ilibft/
+CFLAGS=-Wall -Wextra -Werror -Iinc/ -Ilibft/ -Imlx -D BUFFER_SIZE=1024
 
 MLX_FLAGS = -Lmlx -lmlx -framework OpenGL -framework AppKit
 
 all: $(NAME)
 
-$(NAME): $(OBJS) $(LIBFT)
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(MLX_FLAGS) $(LIBFT)
+$(NAME): $(OBJS) $(LIBFT) $(MLX)
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(MLX_FLAGS) $(LIBFT) $(MLX)
 
 $(LIBFT_LIB_DIR):
 	$(MAKE) -C $(LIBFT_LIB_DIR)
@@ -40,15 +42,19 @@ $(LIBFT_LIB_DIR):
 ${LIBFT}:
 	$(MAKE) -C ${LIBFT_LIB_DIR}
 
+${MLX}:
+	$(MAKE) -C ${MLX_DIR}
+
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	make clean -C $(LIBFT_LIB_DIR)
+	make clean -C $(LIBFT_LIB_DIR) 
+	make clean -C $(MLX_DIR)
 	rm -f $(OBJS)
 
 fclean:	clean
-	make fclean -C $(LIBFT_LIB_DIR)
+	make fclean -C $(LIBFT_LIB_DIR) 
 	rm -f $(NAME)
 
 re:	fclean all

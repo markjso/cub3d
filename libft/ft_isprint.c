@@ -3,18 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isprint.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmarks <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: rmount <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/22 17:27:18 by jmarks            #+#    #+#             */
-/*   Updated: 2022/03/23 12:18:03 by jmarks           ###   ########.fr       */
+/*   Created: 2022/02/02 11:14:07 by rmount            #+#    #+#             */
+/*   Updated: 2022/02/02 11:27:10 by rmount           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "libft.h"
 
 int	ft_isprint(int c)
 {
 	if (c >= 32 && c <= 126)
-		return (1);
+	{
+		return (c);
+	}
 	else
+	{
 		return (0);
+	}
 }

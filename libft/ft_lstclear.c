@@ -1,27 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bzero.c                                         :+:      :+:    :+:   */
+/*   ft_lstclear.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rmount <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/01 16:34:14 by rmount            #+#    #+#             */
-/*   Updated: 2022/02/01 16:43:11 by rmount           ###   ########.fr       */
+/*   Created: 2022/02/15 15:40:13 by rmount            #+#    #+#             */
+/*   Updated: 2022/02/16 08:47:08 by rmount           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_bzero(void *s, size_t n)
+void	ft_lstclear(t_list **lst, void (*del)(void*))
 {
-	size_t			i;
-	unsigned char	*s_ptr;
+	t_list	*t;
 
-	s_ptr = s;
-	i = 0;
-	while (i < n)
+	t = *lst;
+	if (lst && del)
 	{
-		s_ptr[i] = '\0';
-		i++;
+		while (*lst)
+		{
+			t = (*lst)->next;
+			ft_lstdelone(*lst, del);
+			*lst = t;
+		}
 	}
 }

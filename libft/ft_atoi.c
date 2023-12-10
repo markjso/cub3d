@@ -1,37 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_substr.c                                        :+:      :+:    :+:   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmarks <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: rmount <rmount@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/09 16:25:36 by jmarks            #+#    #+#             */
-/*   Updated: 2022/07/05 11:02:09 by jmarks           ###   ########.fr       */
+/*   Created: 2022/02/04 08:46:50 by rmount            #+#    #+#             */
+/*   Updated: 2023/11/27 11:24:40 by rmount           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+int	ft_atoi(const char *str)
 {
-	char	*sub_str;
-	size_t	i;
-	size_t	j;
+	int	result;
+	int	neg;
+	int	i;
 
-	sub_str = malloc(sizeof(*s) * (len + 1));
-	if (!sub_str)
-		return (NULL);
+	result = 0;
+	neg = 0;
 	i = 0;
-	j = 0;
-	while (s[i])
+	while (ft_isspace(str[i]))
+		i++;
+	if (str[i] == '+' || str[i] == '-')
 	{
-		if (i >= start && j < len)
-		{
-			sub_str[j] = s[i];
-			j++;
-		}
+		if (str[i] == '-')
+			neg = 1;
 		i++;
 	}
-	sub_str[j] = '\0';
-	return (sub_str);
+	while (ft_isdigit(str[i]))
+	{
+		result = result * 10 + (str[i] - '0');
+		i++;
+	}
+	if (neg)
+		return (-result);
+	return (result);
 }

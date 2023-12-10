@@ -1,27 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bzero.c                                         :+:      :+:    :+:   */
+/*   ft_isupper.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rmount <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/01 16:34:14 by rmount            #+#    #+#             */
-/*   Updated: 2022/02/01 16:43:11 by rmount           ###   ########.fr       */
+/*   Created: 2022/02/14 11:21:15 by rmount            #+#    #+#             */
+/*   Updated: 2022/02/14 11:21:19 by rmount           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
-void	ft_bzero(void *s, size_t n)
+int	ft_isupper(int c)
 {
-	size_t			i;
-	unsigned char	*s_ptr;
-
-	s_ptr = s;
-	i = 0;
-	while (i < n)
+	if (c >= 'A' && c <= 'Z')
 	{
-		s_ptr[i] = '\0';
-		i++;
+		return (c);
 	}
+	return (0);
 }

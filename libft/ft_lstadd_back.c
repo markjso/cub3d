@@ -1,27 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bzero.c                                         :+:      :+:    :+:   */
+/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rmount <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/01 16:34:14 by rmount            #+#    #+#             */
-/*   Updated: 2022/02/01 16:43:11 by rmount           ###   ########.fr       */
+/*   Created: 2022/02/15 14:48:54 by rmount            #+#    #+#             */
+/*   Updated: 2022/02/15 14:54:17 by rmount           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_bzero(void *s, size_t n)
+void	ft_lstadd_back(t_list **lst, t_list *new)
 {
-	size_t			i;
-	unsigned char	*s_ptr;
+	t_list	*t;
 
-	s_ptr = s;
-	i = 0;
-	while (i < n)
+	if (*lst)
 	{
-		s_ptr[i] = '\0';
-		i++;
+		t = ft_lstlast(*lst);
+		t->next = new;
+	}
+	else
+	{
+		*lst = new;
 	}
 }

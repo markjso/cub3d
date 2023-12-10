@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmarks <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: rmount <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 14:10:16 by jmarks            #+#    #+#             */
-/*   Updated: 2023/11/24 14:10:19 by jmarks           ###   ########.fr       */
+/*   Updated: 2023/12/10 13:01:22 by rmount           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	find_player(t_map *map)
 	while (++i < map->height)
 	{
 		j = -1;
-		while (++j < ft_strlen(map->map[i]))
+		while (++j < (int)ft_strlen(map->map[i]))
 		{
 			if (ft_strchr("NSEW", map->map[i][j]))
 			{

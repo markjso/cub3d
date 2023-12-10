@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmarks <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: rmount <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 14:48:17 by jmarks            #+#    #+#             */
-/*   Updated: 2023/11/25 14:48:21 by jmarks           ###   ########.fr       */
+/*   Updated: 2023/12/10 13:03:06 by rmount           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	check_valid_line(char *line)
 			break ;
 		i++;	
 	}
-	if (i >= ft_strlen(line))
+	if (i >= (int)ft_strlen(line))
 		return (1);
 	i = -1;
 	while (line[++i])

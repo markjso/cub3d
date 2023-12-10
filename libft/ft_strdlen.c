@@ -1,27 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bzero.c                                         :+:      :+:    :+:   */
+/*   ft_strdlen.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rmount <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/01 16:34:14 by rmount            #+#    #+#             */
-/*   Updated: 2022/02/01 16:43:11 by rmount           ###   ########.fr       */
+/*   Created: 2022/02/15 08:32:44 by rmount            #+#    #+#             */
+/*   Updated: 2022/02/15 08:34:02 by rmount           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_bzero(void *s, size_t n)
+size_t	ft_strdlen(const char *string, char delimeter)
 {
-	size_t			i;
-	unsigned char	*s_ptr;
+	size_t	i;
 
-	s_ptr = s;
 	i = 0;
-	while (i < n)
+	while (string[i] && string[i] != delimeter)
 	{
-		s_ptr[i] = '\0';
 		i++;
 	}
+	return (i);
 }

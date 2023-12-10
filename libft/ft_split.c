@@ -3,60 +3,76 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmarks <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: rmount <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/28 16:48:01 by jmarks            #+#    #+#             */
-/*   Updated: 2022/07/05 11:10:37 by jmarks           ###   ########.fr       */
+/*   Created: 2022/02/16 10:28:13 by rmount            #+#    #+#             */
+/*   Updated: 2023/11/24 15:28:21 by rmount           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-#include "libft.h"
-
-static size_t	ft_countword(char const *s, char c)
+size_t	num_words(char const *s, char delim)
 {
+	size_t	i;
 	size_t	count;
+	char	tru;
 
-	if (!*s)
-		return (0);
+	i = 0;
 	count = 0;
-	while (*s)
+	tru = 1;
+	while (s[i])
 	{
-		while (*s == c)
-			s++;
-		if (*s)
+		if (tru && s[i] != delim)
+		{
+			tru = 0;
 			count++;
-		while (*s != c && *s)
-			s++;
+		}
+		else if (!tru && s[i] == delim)
+			tru = 1;
+		i++;
 	}
 	return (count);
 }
 
+char	*fillstring(char const**s, char c)
+{
+	char	*str;
+	size_t	i;
+
+	i = 0;
+	while (**s && **s == c)
+		(*s)++;
+	while ((*s)[i] && (*s)[i] != c)
+		i++;
+	str = ft_calloc(i + 1, sizeof(char));
+	if (!str)
+		return (str);
+	ft_memcpy(str, *s, i);
+	*s += i;
+	return (str);
+}
+
 char	**ft_split(char const *s, char c)
 {
-	char	**lst;
-	size_t	word_len;
-	int		i;
+	char			**strings;
+	unsigned int	count;
+	size_t			i;
 
-	lst = (char **)malloc((ft_countword(s, c) + 1) * sizeof(char *));
-	if (!s || !lst)
-		return (0);
 	i = 0;
-	while (*s)
+	if (!s)
+		return (NULL);
+	count = num_words(s, c);
+	strings = ft_calloc(count + 1, sizeof(char *));
+	if (!strings)
+		return (strings);
+	while (i < count)
 	{
-		while (*s == c && *s)
-			s++;
-		if (*s)
-		{
-			if (!ft_strchr(s, c))
-				word_len = ft_strlen(s);
-			else
-				word_len = ft_strchr(s, c) - s;
-			lst[i++] = ft_substr(s, 0, word_len);
-			s += word_len;
-		}
+		strings[i] = fillstring(&s, c);
+		if (!strings[i])
+			return (0);
+		i++;
 	}
-	lst[i] = NULL;
-	return (lst);
+	strings[i] = NULL;
+	return (strings);
 }

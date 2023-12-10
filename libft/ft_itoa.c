@@ -3,56 +3,59 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmarks <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: rmount <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/17 15:18:30 by jmarks            #+#    #+#             */
-/*   Updated: 2022/03/23 13:45:48 by jmarks           ###   ########.fr       */
+/*   Created: 2022/02/10 12:01:05 by rmount            #+#    #+#             */
+/*   Updated: 2023/11/24 15:32:54 by rmount           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "libft.h"
 
-static int	ft_digitsize(int num)
+int	countdigits(long int n)
 {
 	unsigned int	count;
 
-	if (num == 0)
-		return (1);
 	count = 0;
-	if (num < 0)
-		count = count + 1;
-	while (num != 0)
+	if (n == 0)
+		return (1);
+	if (n < 0)
 	{
-		num = num / 10;
 		count++;
+		n *= -1;
+	}
+	while (n)
+	{
+		count++;
+		n /= 10;
 	}
 	return (count);
 }
 
 char	*ft_itoa(int n)
 {
-	char			*str;
-	unsigned int	num;
-	unsigned int	len;
+	long int		num;
+	int				sign;
+	char			*result;
+	unsigned int	digits;
 
-	len = ft_digitsize(n);
-	str = (char *)malloc(sizeof(char) * (len + 1));
-	if (str == NULL)
-		return (NULL);
-	if (n < 0)
+	num = n;
+	sign = 0;
+	digits = countdigits(num);
+	if (num < 0)
 	{
-		str[0] = '-';
-		num = -n;
+		num *= -1;
+		sign = -1;
 	}
-	else
-		num = n;
-	if (num == 0)
-		str[0] = '0';
-	str[len] = '\0';
-	while (num != 0)
+	result = ft_calloc((digits + 1), sizeof(char));
+	if (!result)
+		return (0);
+	result [0] = '-';
+	while (digits + sign)
 	{
-		str[len - 1] = (num % 10) + '0';
-		num = num / 10;
-		len--;
+		result[digits - 1] = (num % 10 + '0');
+		num /= 10;
+		digits--;
 	}
-	return (str);
+	return (result);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmarks <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: rmount <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/01 16:40:04 by jmarks            #+#    #+#             */
-/*   Updated: 2022/06/06 17:25:13 by jmarks           ###   ########.fr       */
+/*   Created: 2022/02/03 13:53:51 by rmount            #+#    #+#             */
+/*   Updated: 2022/02/04 08:23:51 by rmount           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,40 @@
 
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
 {
-	size_t	h;
-	size_t	n;
+	size_t	i;
+	size_t	j;
 
-	h = 0;
-	if (!ft_strlen(needle))
-		return ((char *)haystack);
-	while (haystack[h])
+	i = 0;
+	if (!needle[i])
 	{
-		n = 0;
-		while (haystack[h + n] == needle[n] && (h + n) < len)
-		{
-			if (haystack[h + n] == '\0' && needle[n] == '\0')
-				return ((char *)&haystack[h]);
-			n++;
-		}
-		if (!needle[n])
-			return ((char *)haystack + h);
-		h++;
+		return ((char *)haystack);
 	}
-	return (NULL);
+	while (haystack[i] && i < len)
+	{
+		j = 0;
+		while (haystack[i + j] == needle[j] && i + j < len)
+		{
+			if (needle[j + 1] == '\0')
+			{
+				return ((char *)&haystack[i]);
+			}
+			j++;
+		}
+		i++;
+	}
+	return (0);
 }
+/*
+int	main(void)
+{
+	char haystack[] = "lorem ipsum dolor sit amet";
+	char needle[] = "ipsumm";
+	size_t len = 30;
+	int	i = 0;
+	char *result = ft_strnstr(haystack, needle, len);
+	while (result[i])
+	{
+		printf("%c", result[i]);
+		i++;	
+	}
+}*/
