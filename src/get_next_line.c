@@ -3,14 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmarks <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: rmount <rmount@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 13:41:39 by jmarks            #+#    #+#             */
-/*   Updated: 2022/09/26 14:23:12 by jmarks           ###   ########.fr       */
+/*   Updated: 2023/12/11 13:55:36 by rmount           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft/libft.h"
+
+int	is_dir_char(char letter)
+{
+	if (letter == 'N' || letter == 'E' || letter == 'S' || letter == 'W')
+	{
+		return (1);
+	}
+	return (0);
+}
 
 void	*ft_calloc(size_t nmeb, size_t size)
 {

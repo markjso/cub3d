@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmarks <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: rmount <rmount@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 14:07:34 by jmarks            #+#    #+#             */
-/*   Updated: 2023/11/24 14:07:37 by jmarks           ###   ########.fr       */
+/*   Updated: 2023/12/11 13:09:42 by rmount           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
-#include "cub3d.h"
+#include "../inc/cub3d.h"
 
 void	error_mess(char *msg)
 {

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   initialise.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmarks <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: rmount <rmount@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 13:44:19 by jmarks            #+#    #+#             */
-/*   Updated: 2023/11/30 13:44:25 by jmarks           ###   ########.fr       */
+/*   Updated: 2023/12/11 13:57:14 by rmount           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../inc/cub3d.h"
 
 void	init_map(t_map *map)
 {
@@ -23,7 +23,7 @@ void	init_map(t_map *map)
 	map->valid = false;
 }
 
-t_raycast	init_raycast()
+t_raycast	init_raycast(void)
 {
 	t_raycast	ray;
 
