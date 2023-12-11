@@ -12,10 +12,10 @@
 10001
 11111
 
-NO textures/test/north.xpm
-SO textures/test/south.xpm
-WE textures/test/west.xpm
-EA textures/test/east.xpm
+NO assets/north.xpm
+SO assets/south.xpm
+WE assets/west.xpm
+EA assets/east.xpm
 
-F 20,20,20
-C 200,200,200
+F 43,24,12
+C 0,191,255
