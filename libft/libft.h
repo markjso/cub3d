@@ -15,6 +15,10 @@
 # include <stdlib.h>
 # include <unistd.h>
 
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 128
+# endif
+
 typedef struct s_list
 {
 	void			*content;
