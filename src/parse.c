@@ -6,11 +6,11 @@
 /*   By: rmount <rmount@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 14:07:47 by jmarks            #+#    #+#             */
-/*   Updated: 2023/12/11 10:00:24 by rmount           ###   ########.fr       */
+/*   Updated: 2023/12/11 11:54:03 by rmount           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../inc/cub3d.h"
 
 int ft_max_width(int a, int b)
 {
@@ -69,8 +69,9 @@ t_map	map_parser(char *path)
 	map.map = ft_calloc(1, sizeof(char *));
 	read_map(&map, fd);
 	close(fd);
-	validate_chr(map);
+	//validate_chr(map);
 	//check_walls(map);
+	ft_map_valid(map);
 	find_player(&map);
 	return (map);
 }
@@ -84,4 +85,16 @@ void	scan_map(t_mlx *cube, char *line)
 		free(line);
 		quit("COULDN'T ALLOCATE MAP LINE", cube);
 	}
+}
+
+bool	ft_map_valid(t_map map)
+{
+	if (!validate_chr(map))
+		return (false);
+	if (map_can_be_exited(map))
+	{
+		error_mess("Map is not closed in by walls.");
+		return (false);
+	}
+	return (true);
 }

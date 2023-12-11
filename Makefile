@@ -8,6 +8,8 @@ SRC =		src/parse.c \
 			src/checks.c \
 			src/draw.c \
 			src/error.c \
+			src/floodfill.c \
+			src/floodfill_utils.c \
 			src/get_next_line.c \
 			src/player.c \
 			src/movement.c \
