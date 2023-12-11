@@ -70,3 +70,10 @@ int	ft_mlx_pixel_put(t_mlx *cube, int x, int y)
 	dst = cube->addr + (y * cube->line_length + x * (cube->bits_per_pixel / 8));
 	return (*(unsigned int *)dst);
 }
+
+double	ft_abs(double x)
+{
+	if (x < 0)
+		return (-x);
+	return (x);
+}
