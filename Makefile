@@ -45,14 +45,14 @@ ${LIBFT}:
 	$(MAKE) -C ${LIBFT_LIB_DIR}
 
 ${MLX}:
-	$(MAKE) -C ${MLX_DIR}
+	$(MAKE) -C ${MLX_DIR} 2>/dev/null
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
 	make clean -C $(LIBFT_LIB_DIR) 
-	make clean -C $(MLX_DIR)
+	make clean -C $(MLX_DIR) 
 	rm -f $(OBJS)
 
 fclean:	clean

@@ -17,7 +17,7 @@ int	main(int argc, char **argv)
 	t_mlx	*cube;
 
 	if (argc != 2)
-		error_mess("INVALID NUMBER OF ARGUMENTS");
+		error_mess("Invalid number of arguments, must be two");
 	cube = init_mlx(argv[1]);
 	cube->player = init_player(cube->map);
 	cube->raycast = init_raycast();	
