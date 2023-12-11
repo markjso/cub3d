@@ -31,12 +31,7 @@ int	*save_rgb(char *identifier, char *rgb_code)
 	if ((rgb[0] < 0 || rgb[0] > 255)
 		|| (rgb[1] < 0 || rgb[1] > 255)
 		|| (rgb[2] < 0 || rgb[2] > 255))
-	{
-		write(1, "RGB values are incorrect, resetting values\n", 43);
-		rgb[0] = 42;
-		rgb[1] = 42;
-		rgb[2] = 42;
-	}
+	error_mess("Not a valid rgb number");
 	ft_clean_arr(rgb_split);
 	rgb_split = NULL;
 	return (rgb);
