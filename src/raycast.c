@@ -3,26 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   raycast.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmarks <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: rmount <rmount@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 15:30:46 by jmarks            #+#    #+#             */
-/*   Updated: 2023/11/30 15:30:48 by jmarks           ###   ########.fr       */
+/*   Updated: 2023/12/11 14:46:14 by rmount           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../inc/cub3d.h"
 
 static void	calc_ray_directions(t_mlx *cube, int x)
 {
 	t_raycast	*ray;
-	double 		camera_x;
+	double		camera_x;
 
 	ray = &cube->raycast;
 	camera_x = (2 * x / (double)WIN_WIDTH - 1);
-	ray->ray_dir_x = cube->player.dir_x + cube->player.plane_x 
-			* camera_x;
+	ray->ray_dir_x = cube->player.dir_x + cube->player.plane_x
+		* camera_x;
 	ray->ray_dir_y = cube->player.dir_y + cube->player.plane_y
-			* camera_x;
+		* camera_x;
 	ray->map_x = (int) cube->player.pos_x;
 	ray->map_y = (int) cube->player.pos_y;
 	if (ray->ray_dir_x == 0)
@@ -37,30 +37,30 @@ static void	calc_ray_directions(t_mlx *cube, int x)
 
 static void	calculate_dda(t_mlx *cube)
 {
-	t_raycast	*ray;
+	t_raycast	*r;
 
-	ray = &cube->raycast;
-	if (ray->ray_dir_x < 0)
+	r = &cube->raycast;
+	if (r->ray_dir_x < 0)
 	{
-		ray->step_x = -1;
-		ray->side_dist_x = (cube->player.pos_x - ray->map_x) * ray->delta_dist_x;
+		r->step_x = -1;
+		r->side_dist_x = (cube->player.pos_x - r->map_x) * r->delta_dist_x;
 	}
 	else
 	{
-		ray->step_x = 1;
-		ray->side_dist_x = (ray->map_x + 1.0 - cube->player.pos_x)
-			* ray->delta_dist_x;
+		r->step_x = 1;
+		r->side_dist_x = (r->map_x + 1.0 - cube->player.pos_x)
+			* r->delta_dist_x;
 	}
-	if (ray->ray_dir_y < 0)
+	if (r->ray_dir_y < 0)
 	{
-		ray->step_y = -1;
-		ray->side_dist_y = (cube->player.pos_y - ray->map_y) * ray->delta_dist_y;
+		r->step_y = -1;
+		r->side_dist_y = (cube->player.pos_y - r->map_y) * r->delta_dist_y;
 	}
 	else
 	{
-		ray->step_y = 1;
-		ray->side_dist_y = (ray->map_y + 1.0 - cube->player.pos_y)
-			* ray->delta_dist_y;
+		r->step_y = 1;
+		r->side_dist_y = (r->map_y + 1.0 - cube->player.pos_y)
+			* r->delta_dist_y;
 	}
 }
 

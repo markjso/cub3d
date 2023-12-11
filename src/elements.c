@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   elements.c                                           :+:      :+:    :+:   */
+/*   elements.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmarks <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: rmount <rmount@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 14:05:55 by jmarks            #+#    #+#             */
-/*   Updated: 2023/11/24 14:05:57 by jmarks           ###   ########.fr       */
+/*   Updated: 2023/12/11 13:52:15 by rmount           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../inc/cub3d.h"
 
 static void	init_elements(t_elements *elements)
 {
@@ -69,6 +69,7 @@ static void	set_textures(t_mlx *cube, t_elements elements, char *line, int dir)
 static void	set_color(t_elements *elements, char *line)
 {
 	int	*rgb;
+
 	if (line[0] == 'C')
 	{
 		rgb = save_rgb("C", line);
@@ -90,13 +91,12 @@ t_elements	parse_elements(t_mlx *cube, char *path)
 	t_elements	elements;
 
 	init_elements(&elements);
-	fd = open(path, O_RDONLY);
-	if (fd < 0)
-		perror("file: ");
-	while ((line = get_next_line(fd)))
+	fd = do_file(path);
+	line = get_next_line(fd);
+	while (line)
 	{
 		line = ft_strtrim(line, "\n\t");
-		if (line[0] == 'N' || line[0] == 'S' || line[0] == 'W' || line[0] == 'E')
+		if (is_dir_char(line[0]))
 		{
 			if (check_file_format(line, ".xpm"))
 				error_mess("Incorrect texture file format, must be .xpm");
@@ -106,6 +106,7 @@ t_elements	parse_elements(t_mlx *cube, char *path)
 		if (line[0] == 'C' || line[0] == 'F')
 			set_color(&elements, line);
 		free(line);
+		line = get_next_line(fd);
 	}
 	close(fd);
 	check_elements(elements);

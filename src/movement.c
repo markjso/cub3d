@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   movement.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmarks <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: rmount <rmount@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 14:16:25 by jmarks            #+#    #+#             */
-/*   Updated: 2023/11/24 14:16:27 by jmarks           ###   ########.fr       */
+/*   Updated: 2023/12/11 13:58:28 by rmount           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../inc/cub3d.h"
 
-int is_wall(float x, float y, t_mlx *cube)
+int	is_wall(float x, float y, t_mlx *cube)
 {
 	char	**worldmap;
 

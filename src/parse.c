@@ -6,42 +6,39 @@
 /*   By: rmount <rmount@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 14:07:47 by jmarks            #+#    #+#             */
-/*   Updated: 2023/12/11 11:54:03 by rmount           ###   ########.fr       */
+/*   Updated: 2023/12/11 14:41:03 by rmount           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/cub3d.h"
 
-int ft_max_width(int a, int b)
+int	ft_max_width(int a, int b)
 {
 	int	z;
 
 	z = 0;
 	if (a > b)
-	z = a;
+		z = a;
 	else
-	z = b;
+		z = b;
 	return (z);
 }
 
-void read_map(t_map *map, int fd)
+void	read_map(t_map *map, int fd)
 {
 	int		i;
 	char	*line;
+	char	**tmp;
 
-	map->height = 0;
-	map->map = (char **)ft_calloc(1, sizeof(char *));
-	while ((line = get_next_line(fd)))
+	line = get_next_line(fd);
+	while (line)
 	{
 		check_valid_line(line);
-		line = ft_strtrim(line, "\n");	
-		char **tmp = (char **)ft_calloc(map->height + 1, sizeof(char *));
-		i = 0;
-		while (i < map->height)
-		{
+		line = ft_strtrim(line, "\n");
+		tmp = (char **)ft_calloc(map->height + 1, sizeof(char *));
+		i = -1;
+		while (++i < map->height)
 			tmp[i] = map->map[i];
-			++i;
-		}
 		free(map->map);
 		map->map = tmp;
 		if (line[0] == ' ' || ft_isdigit(line[0]))
@@ -51,13 +48,14 @@ void read_map(t_map *map, int fd)
 			free(line);
 			map->height++;
 		}
+		line = get_next_line(fd);
 	}
 	close(fd);
 }
 
 t_map	map_parser(char *path)
 {
-	int	fd;
+	int		fd;
 	t_map	map;
 
 	init_map(&map);
@@ -66,11 +64,10 @@ t_map	map_parser(char *path)
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
 		perror("FILE: ");
-	map.map = ft_calloc(1, sizeof(char *));
+	map.map = (char **)ft_calloc(1, sizeof(char *));
+	map.height = 0;
 	read_map(&map, fd);
 	close(fd);
-	//validate_chr(map);
-	//check_walls(map);
 	ft_map_valid(map);
 	find_player(&map);
 	return (map);

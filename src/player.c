@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   player.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmount <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: rmount <rmount@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 14:10:16 by jmarks            #+#    #+#             */
-/*   Updated: 2023/12/10 13:01:22 by rmount           ###   ########.fr       */
+/*   Updated: 2023/12/11 14:41:26 by rmount           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../inc/cub3d.h"
 
 void	find_player(t_map *map)
 {

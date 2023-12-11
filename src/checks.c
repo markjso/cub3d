@@ -6,12 +6,11 @@
 /*   By: rmount <rmount@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 14:06:09 by jmarks            #+#    #+#             */
-/*   Updated: 2023/12/11 11:20:44 by rmount           ###   ########.fr       */
+/*   Updated: 2023/12/11 14:35:31 by rmount           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
-#include "cub3d.h"
+#include "../inc/cub3d.h"
 
 int	check_file_format(char *file, char *file_format)
 {
@@ -47,30 +46,3 @@ bool	validate_chr(t_map map)
 		error_mess("No player or too many players detected");
 	return (true);
 }
-
-// void	check_walls(t_map map)
-// {
-// 	int	i;
-// 	int	j;
-
-// 	i = 0;
-// 	j = 0;
-// 	while (i < map.height)
-// 	{
-// 		if (map.map[i][0] != '1' || map.map[i][map.width - 1] != '1')
-// 		{
-// 			printf("%i = %c, %i = %c\n", i, map.map[i][0], j, map.map[i][map.width - 1]);
-// 			error_mess("Missing wall/s on the left or right.");
-// 		}
-// 		i++;
-// 	}
-// 	while (j < map.width)
-// 	{
-// 		if (map.map[0][j] != '1' || map.map[map.height - 1][j] != '1')
-// 		{
-// 			error_mess("Missing wall/s on the top or bottom.");
-// 		}
-// 		j++;
-// 	}
-// }
-

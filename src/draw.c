@@ -3,32 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmarks <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: rmount <rmount@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 14:07:11 by jmarks            #+#    #+#             */
-/*   Updated: 2023/11/24 14:07:21 by jmarks           ###   ########.fr       */
+/*   Updated: 2023/12/11 13:20:39 by rmount           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
-
-void	get_pixel_colour(t_mlx *cube, int x, int y, int rgb)
-{
-	char	*dst;
-	if (y < 0 || x < 0 || y > WIN_HEIGHT || x > WIN_WIDTH)
-		return ;
-	dst = cube->addr + (y * cube->line_length + x
-							* (cube->bits_per_pixel / 8));
-		*(unsigned int *) dst = rgb;
-}
-
-int	ft_mlx_pixel_put(t_mlx *cube, int x, int y)
-{
-	char	*dst;
-
-	dst = cube->addr + (y * cube->line_length + x * (cube->bits_per_pixel / 8));
-	return (*(unsigned int*)dst);
-}
+#include "../inc/cub3d.h"
 
 void	draw_floor_ceiling(t_mlx *cube, int x, int from)
 {

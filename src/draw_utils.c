@@ -1,84 +1,72 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   draw_utils.c                                       :+:      :+:    :+:   */
+/*   draw_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmarks <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: rmount <rmount@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/24 14:08:48 by jmarks            #+#    #+#             */
-/*   Updated: 2023/11/24 14:08:52 by jmarks           ###   ########.fr       */
+/*   Created: 2023/11/24 14:09:56 by jmarks            #+#    #+#             */
+/*   Updated: 2023/12/11 13:08:53 by rmount           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../inc/cub3d.h"
 
-// void	blackout(t_mlx *cube)
-// {
-// 	int	x;
-// 	int	y;
+static int	set_i(t_mlx *cube)
+{
+	int	i;
 
-// 	y = -1;
-// 	while (++y < WIN_HEIGHT)
-// 	{
-// 		x = -1;
-// 		while (++x < WIN_WIDTH)
-// 			add_pixel(&cube->frame, 0, x, y);
-// 	}
-// }
+	i = 0;
+	if (!cube->map.map)
+		return (i);
+	else
+		while (cube->map.map[++i])
+			;
+	return (i);
+}
 
-// double	distance(t_mlx *c, t_raycast *ray)
-// {
-// 	double	squared_dist;
+int	ft_add_str_to_arr(char *str, t_mlx *cube)
+{
+	int		i;
+	int		j;
+	char	**new_arr;
+	char	*n_str;
 
-// 	squared_dist = pow(ray->pos.x - c->player.pos_x, 2)
-// 		+ pow(ray->pos.y - c->player.pos_y, 2);
-// 	return (squared_dist);
-// }
+	i = -1;
+	j = -1;
+	n_str = ft_calloc((ft_strlen(str) + 1), sizeof(char));
+	if (!n_str)
+		return (1);
+	ft_strcpy(n_str, str);
+	i = set_i(cube);
+	new_arr = ft_calloc((i + 2), sizeof(char *));
+	if (!new_arr)
+		return (1);
+	while (++j < i)
+		new_arr[j] = ft_strdup(cube->map.map[j]);
+	new_arr[i] = n_str;
+	new_arr[i + 1] = NULL;
+	if (cube->map.map)
+		ft_clean_arr(cube->map.map);
+	cube->map.map = new_arr;
+	return (0);
+}
 
-// void	fix_fisheye(float p_angle, t_raycast *ray)
-// {
-// 	float	cos_angle;
+void	get_pixel_colour(t_mlx *cube, int x, int y, int rgb)
+{
+	char	*dst;
 
-// 	cos_angle = p_angle - ray->angle;
-// 	if (cos_angle < 0)
-// 		cos_angle += (PII);
-// 	if (cos_angle > (PII))
-// 		cos_angle -= (PII);
-// 	ray->dist = ray->dist * cos(cos_angle);
-// }
+	if (y < 0 || x < 0 || y > WIN_HEIGHT || x > WIN_WIDTH)
+		return ;
+	dst = cube->addr + (y * cube->line_length + x
+			* (cube->bits_per_pixel / 8));
+	*(unsigned int *) dst = rgb;
+}
 
-// void	draw_square(t_mlx *cube, t_coord pos, int height, int color)
-// {
-// 	int	i;
-// 	int	j;
+int	ft_mlx_pixel_put(t_mlx *cube, int x, int y)
+{
+	char	*dst;
 
-// 	i = -1;
-// 	while (++i < height)
-// 	{
-// 		j = -1;
-// 		while (++j < height)
-// 			add_pixel(&cube->frame, color, pos.x + i, pos.y + j);
-// 	}
-// }
-
-// void	draw_line(t_mlx *cube, t_coord a, t_coord b, int color)
-// {
-// 	t_coord	d;
-// 	t_coord	inc;
-// 	double	step;
-// 	double	i;
-
-// 	d.x = fabs(b.x - a.x);
-// 	d.y = fabs(b.y - a.y);
-// 	step = ft_ternary_double(d.x > d.y, d.x, d.y);
-// 	inc.x = (b.x - a.x) / step;
-// 	inc.y = (b.y - a.y) / step;
-// 	i = 1;
-// 	while (i <= step)
-// 	{
-// 		add_pixel(&cube->frame, color, round(a.x), round(a.y));
-// 		a.x += inc.x;
-// 		a.y += inc.y;
-// 		i++;
-// 	}
-// }
+	dst = cube->addr + (y * cube->line_length + x * (cube->bits_per_pixel / 8));
+	return (*(unsigned int *)dst);
+}

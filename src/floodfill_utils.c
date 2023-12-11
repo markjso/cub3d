@@ -6,7 +6,7 @@
 /*   By: rmount <rmount@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 11:44:02 by rmount            #+#    #+#             */
-/*   Updated: 2023/12/11 11:47:44 by rmount           ###   ########.fr       */
+/*   Updated: 2023/12/11 13:54:52 by rmount           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,4 +45,16 @@ void	fl_free(bool **visited, t_map map)
 		i++;
 	}
 	free(visited);
+}
+
+int	do_file(char *path)
+{
+	int	fd;
+
+	fd = open(path, O_RDONLY);
+	if (fd < 0)
+	{
+		perror ("file: ");
+	}
+	return (fd);
 }

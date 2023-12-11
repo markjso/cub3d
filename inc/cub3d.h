@@ -6,7 +6,7 @@
 /*   By: rmount <rmount@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 16:50:38 by jibanez-          #+#    #+#             */
-/*   Updated: 2023/12/11 11:55:43 by rmount           ###   ########.fr       */
+/*   Updated: 2023/12/11 13:51:38 by rmount           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,6 +144,7 @@ void		scan_map(t_mlx *cube, char *line);
 t_map		map_parser(char *path);
 t_elements	parse_elements(t_mlx *cube, char *path);
 bool		ft_map_valid(t_map map);
+int			do_file(char *path);
 
 /*
 **	Checks
@@ -209,5 +210,6 @@ int			ft_add_str_to_arr(char *str, t_mlx *cube);
 void		init_map(t_map *map);
 void		get_width(t_map *map);
 char		*get_next_line(int fd);
+int			is_dir_char(char letter);
 
 #endif

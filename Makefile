@@ -17,7 +17,7 @@ SRC =		src/parse.c \
 			src/cub3d.c \
 			src/initialise.c \
 			src/utils.c \
-			src/draw_utils2.c
+			src/draw_utils.c
 	
 OBJS=$(SRC:.c=.o)
 
