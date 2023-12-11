@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmount <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: rmount <rmount@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 16:50:38 by jibanez-          #+#    #+#             */
-/*   Updated: 2023/12/10 12:50:47 by rmount           ###   ########.fr       */
+/*   Updated: 2023/12/11 11:55:43 by rmount           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,6 +143,7 @@ void		read_map(t_map *map, int fd);
 void		scan_map(t_mlx *cube, char *line);
 t_map		map_parser(char *path);
 t_elements	parse_elements(t_mlx *cube, char *path);
+bool		ft_map_valid(t_map map);
 
 /*
 **	Checks
@@ -152,6 +153,16 @@ bool		validate_chr(t_map map);
 void		validate_map(t_mlx *cube);
 int			check_valid_line(char *line);
 void		check_walls(t_map map);
+
+/*
+** Floodfill
+*/
+bool	map_can_be_exited(t_map map);
+bool	fl_visited_boundary(bool **visited, t_map map);
+void	fl_init_visited(bool **visited, t_map map);
+void	floodfill(t_map map, bool **visited, int i, int j);
+void	fl_find_player(t_map map, int *sr, int *sc);
+void	fl_free(bool **visited, t_map map);
 
 /*
 **	Move
