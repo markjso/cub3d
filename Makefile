@@ -29,7 +29,7 @@ LIBFT=libft/libft.a
 
 LIBFT_LIB_DIR = libft
 
-CFLAGS=-Wall -Wextra -Werror -Iinc/ -Ilibft/ -Imlx -D BUFFER_SIZE=1024
+CFLAGS=-Wall -Wextra -Werror -Iinc/ -Ilibft/ -Imlx
 
 MLX_FLAGS = -Lmlx -lmlx -framework OpenGL -framework AppKit
 
