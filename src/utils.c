@@ -6,7 +6,7 @@
 /*   By: rmount <rmount@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 14:48:17 by jmarks            #+#    #+#             */
-/*   Updated: 2023/12/11 13:10:47 by rmount           ###   ########.fr       */
+/*   Updated: 2023/12/11 15:01:25 by rmount           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 
 int	check_valid_line(char *line)
 {
-	int i;
+	int	i;
 
 	i = -1;
-	while(line[++i])
+	while (line[++i])
 	{
-		if(line[i] != ' ' && line[i] != '\t' && line[i] != '\n')
+		if (line[i] != ' ' && line[i] != '\t' && line[i] != '\n')
 			break ;
-		i++;	
+		i++;
 	}
 	if (i >= (int)ft_strlen(line))
 		return (1);
@@ -31,7 +31,7 @@ int	check_valid_line(char *line)
 		if (line[i] == ' ')
 			line[i] = '1';
 	}
-	return (0);	
+	return (0);
 }
 
 char	*ft_free_to_trim(char *s1, const char *set)
@@ -80,13 +80,3 @@ int	dir_from_id(char *identifier)
 		return (DIR_EAST);
 	return (-1);
 }
-
-double	ft_abs(double x)
-{
-	if (x < 0)
-		return (-x);
-	return (x);
-}
-
-
-
