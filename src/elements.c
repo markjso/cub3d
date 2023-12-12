@@ -39,7 +39,7 @@ static void	check_elements(t_elements elements)
 		error_mess("missing east texture");
 }
 
-static void	set_textures(t_mlx *cube, t_elements elements, char *line, int dir)
+void	set_textures(t_mlx *cube, t_elements elements, char *line, int dir)
 {
 	void	*image;
 	int		height;
@@ -62,11 +62,41 @@ static void	set_textures(t_mlx *cube, t_elements elements, char *line, int dir)
 			&elements.wall_tex[dir].bits_per_pixel, \
 			&elements.wall_tex[dir].line_length, \
 			&elements.wall_tex[dir].endian);
-	if (!elements.wall_tex[dir].addr)
-		error_mess("mlx_get_data_addr failed");
 }
 
-static void	set_color(t_elements *elements, char *line)
+t_elements	parse_elements(t_mlx *cube, char *path)
+{
+	int			fd;
+	char		*line;
+	char		*tmp;
+	t_elements	elements;
+
+	init_elements(&elements);
+	fd = do_file(path);
+	while (1)
+	{
+		line = get_next_line(fd);
+		if (!line)
+			break ;
+		tmp = ft_strtrim(line, " \t");
+		if (is_dir_char(tmp[0]))
+		{
+			if (!check_file_format(tmp, ".xpm"))
+				error_mess("Incorrect texture file format, must be .xpm");
+			else
+				set_textures(cube, elements, tmp, dir_from_id(tmp));
+		}
+		if (tmp[0] == 'C' || tmp[0] == 'F')
+			set_color(&elements, tmp);
+		free(tmp);	
+		free(line);
+	}
+	close(fd);
+	check_elements(elements);
+	return (elements);
+}
+
+void	set_color(t_elements *elements, char *line)
 {
 	int	*rgb;
 
@@ -84,31 +114,3 @@ static void	set_color(t_elements *elements, char *line)
 	}
 }
 
-t_elements	parse_elements(t_mlx *cube, char *path)
-{
-	int			fd;
-	char		*line;
-	t_elements	elements;
-
-	init_elements(&elements);
-	fd = do_file(path);
-	line = get_next_line(fd);
-	while (line)
-	{
-		line = ft_strtrim(line, "\n\t");
-		if (is_dir_char(line[0]))
-		{
-			if (check_file_format(line, ".xpm"))
-				error_mess("Incorrect texture file format, must be .xpm");
-			else
-				set_textures(cube, elements, line, dir_from_id(line));
-		}
-		if (line[0] == 'C' || line[0] == 'F')
-			set_color(&elements, line);
-		free(line);
-		line = get_next_line(fd);
-	}
-	close(fd);
-	check_elements(elements);
-	return (elements);
-}

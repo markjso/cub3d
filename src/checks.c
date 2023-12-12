@@ -46,3 +46,25 @@ bool	validate_chr(t_map map)
 		error_mess("No player or too many players detected");
 	return (true);
 }
+
+bool	check_valid_line(char *line)
+{
+	int i;
+
+	i = -1;
+	while(line[++i])
+	{
+		if(line[i] != ' ' && line[i] != '\t' && line[i] != '\n')
+			break ;
+		i++;	
+	}
+	if (i >= (int)ft_strlen(line))
+		return (false);
+	i = -1;
+	while (line[++i])
+	{
+		if (line[i] == ' ')
+			line[i] = '1';
+	}
+	return (true);	
+}

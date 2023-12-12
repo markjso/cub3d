@@ -25,5 +25,6 @@ int	main(int argc, char **argv)
 	mlx_hook(cube->win, 2, 1L << 0, keypress, cube);
 	mlx_hook(cube->win, 17, 0, leave, cube);
 	mlx_loop(cube->mlx);
+	free(cube);
 	return (0);
 }

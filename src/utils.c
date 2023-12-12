@@ -12,28 +12,6 @@
 
 #include "../inc/cub3d.h"
 
-int	check_valid_line(char *line)
-{
-	int i;
-
-	i = -1;
-	while(line[++i])
-	{
-		if(line[i] != ' ' && line[i] != '\t' && line[i] != '\n')
-			break ;
-		i++;	
-	}
-	if (i >= (int)ft_strlen(line))
-		return (1);
-	i = -1;
-	while (line[++i])
-	{
-		if (line[i] == ' ')
-			line[i] = '1';
-	}
-	return (0);	
-}
-
 char	*ft_free_to_trim(char *s1, const char *set)
 {
 	char	*tmp;
@@ -55,17 +33,18 @@ int	ft_strslen(char **strs)
 	return (i);
 }
 
-void	ft_free_strs(char **strs)
+char	*ft_strjoin_and_free(char *s1, char *s2)
 {
-	int	i;
+	char	*str;
 
-	i = 0;
-	while (strs[i])
+	if (!s1)
 	{
-		free(strs[i]);
-		i++;
+		s1 = (char *) malloc(1);
+		s1[0] = '\0';
 	}
-	free(strs);
+	str = ft_strjoin(s1, s2);
+	free(s1);
+	return (str);
 }
 
 int	dir_from_id(char *identifier)

@@ -21,12 +21,11 @@ void	find_player(t_map *map)
 	while (++i < map->height)
 	{
 		j = -1;
-		while (++j < (int)ft_strlen(map->map[i]))
+		while (++j < ft_strlen(map->map[i]))
 		{
-			if (ft_strchr("NSEW", map->map[i][j]))
+			if (map->map[i][j] == 'N' || map->map[i][j] == 'S' \
+				|| map->map[i][j] == 'E' || map->map[i][j] == 'W')
 			{
-				if (map->map[i][j] == '\0')
-					break ;
 				map->player_x = i;
 				map->player_y = j;
 				map->player_dir = map->map[i][j];

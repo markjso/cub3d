@@ -142,7 +142,7 @@ t_raycast	init_raycast();
 void		read_map(t_map *map, int fd);
 void		scan_map(t_mlx *cube, char *line);
 t_map		map_parser(char *path);
-t_elements	parse_elements(t_mlx *cube, char *path);
+// t_elements	parse_elements(t_mlx *cube, char *path);
 bool		ft_map_valid(t_map map);
 int			do_file(char *path);
 
@@ -152,18 +152,21 @@ int			do_file(char *path);
 int			check_file_format(char *file, char *file_format);
 bool		validate_chr(t_map map);
 void		validate_map(t_mlx *cube);
-int			check_valid_line(char *line);
+bool		check_valid_line(char *line);
 void		check_walls(t_map map);
+void		ft_normalise_width(t_map map);
+bool		ft_is_valid_map_char(char c);
+bool		validate_chr(t_map map);
 
 /*
 ** Floodfill
 */
-bool	map_can_be_exited(t_map map);
-bool	fl_visited_boundary(bool **visited, t_map map);
-void	fl_init_visited(bool **visited, t_map map);
-void	floodfill(t_map map, bool **visited, int i, int j);
-void	fl_find_player(t_map map, int *sr, int *sc);
-void	fl_free(bool **visited, t_map map);
+bool		map_can_be_exited(t_map map);
+bool		fl_visited_boundary(bool **visited, t_map map);
+void		fl_init_visited(bool **visited, t_map map);
+void		floodfill(t_map map, bool **visited, int i, int j);
+void		fl_find_player(t_map map, int *sr, int *sc);
+void		fl_free(bool **visited, t_map map);
 
 /*
 **	Move
@@ -175,7 +178,10 @@ int			keypress(int keycode, t_mlx *cube);
 */
 int			dir_from_id(char *identifier);
 double		ft_abs(double x);
-// char	*ft_free_to_trim(char *s1, const char *set);
+char		*ft_free_to_trim(char *s1, const char *set);
+int			ft_strslen(char **strs);
+char		**ft_strsjoin(char **strs, char *str);
+char		*ft_strjoin_and_free(char *s1, char *s2);
 
 /*
 **	Draw
@@ -184,7 +190,9 @@ void		get_pixel_colour(t_mlx *cube, int x, int y, int rgb);
 int			ft_mlx_pixel_put(t_mlx *cube, int x, int y);
 int			img_renderer(t_mlx *cube);
 void		draw_floor_ceiling(t_mlx *cube, int x, int from);
+void		set_color(t_elements *elements, char *line);
 void		draw_textures(t_mlx *cube, int x);
+t_elements	parse_elements(t_mlx *cube, char *path);
 void		ft_raycast(t_mlx *cube);
 int			create_rgb(int r, int g, int b);
 int			*save_rgb(char *identifier, char *rgb_code);
@@ -206,9 +214,7 @@ t_player	init_player(t_map map);
 /*
 **	Map
 */
-int			ft_add_str_to_arr(char *str, t_mlx *cube);
-void		init_map(t_map *map);
-void		get_width(t_map *map);
+t_map		init_map(void);
 char		*get_next_line(int fd);
 int			is_dir_char(char letter);
 

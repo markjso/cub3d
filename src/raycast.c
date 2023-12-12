@@ -88,9 +88,13 @@ void	perform_dda(t_mlx *cube)
 			ray->wall_hit = 1;
 	}
 	if (!ray->side)
+	{
 		ray->perp_wall_dist = ray->side_dist_x - ray->delta_dist_x;
+	}
 	else
+		{
 		ray->perp_wall_dist = ray->side_dist_y - ray->delta_dist_y;
+		}
 }
 
 static void	calc_line_height(t_mlx *cube)
