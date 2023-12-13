@@ -28,7 +28,7 @@ static void	init_elements(t_elements *elements)
 static void	check_elements(t_elements elements)
 {
 	if (elements.ceiling == -1 || elements.floor == -1)
-		error_mess("missing color");
+		error_mess("missing colour");
 	if (elements.wall_tex[DIR_NORTH].img == NULL)
 		error_mess("missing north texture");
 	if (elements.wall_tex[DIR_SOUTH].img == NULL)
@@ -47,12 +47,15 @@ void	set_textures(t_mlx *cube, t_elements elements, char *line, int dir)
 
 	height = TEX_HEIGHT;
 	width = TEX_WIDTH;
+	printf("dir is %d\n", dir);
 	if (dir == -1)
 		error_mess("invalid texture identifier");
 	if (elements.wall_tex[dir].img != NULL)
 		error_mess("texture already set");
 	line += 2;
 	line = ft_strtrim(line, " \t\n");
+	if (check_file_format(line, ".xpm"))
+		error_mess("Incorrect texture file format, must be .xpm");
 	image = mlx_xpm_file_to_image(cube->mlx, line, &width, &height);
 	free(line);
 	if (!image)
@@ -62,6 +65,24 @@ void	set_textures(t_mlx *cube, t_elements elements, char *line, int dir)
 			&elements.wall_tex[dir].bits_per_pixel, \
 			&elements.wall_tex[dir].line_length, \
 			&elements.wall_tex[dir].endian);
+}
+
+void	set_colour(t_elements *elements, char *line)
+{
+	int	*rgb;
+
+	if (line[0] == 'C')
+	{
+		rgb = save_rgb("C", line);
+		elements->ceiling = create_rgb(rgb[0], rgb[1], rgb[2]);
+		free(rgb);
+	}
+	else if (line[0] == 'F')
+	{
+		rgb = save_rgb("F", line);
+		elements->floor = create_rgb(rgb[0], rgb[1], rgb[2]);
+		free(rgb);
+	}
 }
 
 t_elements	parse_elements(t_mlx *cube, char *path)
@@ -80,14 +101,9 @@ t_elements	parse_elements(t_mlx *cube, char *path)
 			break ;
 		tmp = ft_strtrim(line, " \t");
 		if (is_dir_char(tmp[0]))
-		{
-			if (!check_file_format(tmp, ".xpm"))
-				error_mess("Incorrect texture file format, must be .xpm");
-			else
-				set_textures(cube, elements, tmp, dir_from_id(tmp));
-		}
+			set_textures(cube, elements, tmp, dir_from_id(tmp));
 		if (tmp[0] == 'C' || tmp[0] == 'F')
-			set_color(&elements, tmp);
+			set_colour(&elements, tmp);
 		free(tmp);	
 		free(line);
 	}
@@ -96,21 +112,4 @@ t_elements	parse_elements(t_mlx *cube, char *path)
 	return (elements);
 }
 
-void	set_color(t_elements *elements, char *line)
-{
-	int	*rgb;
-
-	if (line[0] == 'C')
-	{
-		rgb = save_rgb("C", line);
-		elements->ceiling = create_rgb(rgb[0], rgb[1], rgb[2]);
-		free(rgb);
-	}
-	else if (line[0] == 'F')
-	{
-		rgb = save_rgb("F", line);
-		elements->floor = create_rgb(rgb[0], rgb[1], rgb[2]);
-		free(rgb);
-	}
-}
 

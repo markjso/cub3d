@@ -16,6 +16,7 @@ SRC =		src/parse.c \
 			src/raycast.c \
 			src/cub3d.c \
 			src/initialise.c \
+			src/minimap.c \
 			src/utils.c \
 			src/draw_utils.c
 	

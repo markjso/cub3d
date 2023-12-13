@@ -29,16 +29,22 @@ void	read_map(t_map *map, int fd)
 {
 	char		*line;
 	char		*tmp;
+	int 		map_started;
 
+	map_started = 0;
 	while (1)
 	{
 		line = get_next_line(fd);
 		if (!line)
 			break ;
 		tmp = ft_strtrim(line, " \t\n");
+		if (tmp[0] == '1' || tmp[0] == '0')
+			map_started = 1;
+		if (map_started && (tmp[0] != '1' && tmp[0] != '0'))
+			error_mess("Map content must be at the end of the file");
 		free(line);
 		check_valid_line(tmp);
-		if (tmp[0] == ' ' || ft_isdigit(tmp[0]))
+		if (map_started)
 		{
 			map->map = ft_strsjoin(map->map, ft_strdup(tmp));
 			if (ft_strlen(tmp) > map->width)
@@ -76,7 +82,7 @@ t_map	map_parser(char *path)
 		error_mess("Incorrect file format, must be .cub");
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
-		perror("FILE: ");
+		error_mess("No such file or directory");
 	map = init_map();
 	read_map(&map, fd);
 	close(fd);

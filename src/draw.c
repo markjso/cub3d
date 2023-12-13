@@ -86,6 +86,7 @@ int	img_renderer(t_mlx *cube)
 	cube->addr = mlx_get_data_addr(cube->img, &cube->bits_per_pixel,
 			&cube->line_length, &cube->endian);
 	ft_raycast(cube);
+	draw_minimap(cube);
 	mlx_put_image_to_window(cube->mlx, cube->win, cube->img, 0, 0);
 	return (0);
 }

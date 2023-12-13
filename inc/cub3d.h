@@ -44,6 +44,7 @@
 # define DIR_EAST		3
 # define MOVE_SPEED 0.125
 # define ROT_SPEED 0.075
+# define MINIMAP_MULT 10
 
 /*
 **	=============
@@ -131,7 +132,7 @@ typedef struct s_mlx
 */
 
 /*
-**	Main
+**	Initialise
 */
 t_mlx		*init_mlx(char *filepath);
 t_raycast	init_raycast();
@@ -139,10 +140,8 @@ t_raycast	init_raycast();
 /*
 **	Parse
 */
-void		read_map(t_map *map, int fd);
-void		scan_map(t_mlx *cube, char *line);
+void		ft_normalise_width(t_map map);
 t_map		map_parser(char *path);
-// t_elements	parse_elements(t_mlx *cube, char *path);
 bool		ft_map_valid(t_map map);
 int			do_file(char *path);
 
@@ -154,9 +153,7 @@ bool		validate_chr(t_map map);
 void		validate_map(t_mlx *cube);
 bool		check_valid_line(char *line);
 void		check_walls(t_map map);
-void		ft_normalise_width(t_map map);
 bool		ft_is_valid_map_char(char c);
-bool		validate_chr(t_map map);
 
 /*
 ** Floodfill
@@ -190,7 +187,6 @@ void		get_pixel_colour(t_mlx *cube, int x, int y, int rgb);
 int			ft_mlx_pixel_put(t_mlx *cube, int x, int y);
 int			img_renderer(t_mlx *cube);
 void		draw_floor_ceiling(t_mlx *cube, int x, int from);
-void		set_color(t_elements *elements, char *line);
 void		draw_textures(t_mlx *cube, int x);
 t_elements	parse_elements(t_mlx *cube, char *path);
 void		ft_raycast(t_mlx *cube);
@@ -217,5 +213,6 @@ t_player	init_player(t_map map);
 t_map		init_map(void);
 char		*get_next_line(int fd);
 int			is_dir_char(char letter);
+void		draw_minimap(t_mlx *cube);
 
 #endif

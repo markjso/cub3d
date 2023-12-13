@@ -51,13 +51,14 @@ int	dir_from_id(char *identifier)
 {
 	if (ft_strncmp(identifier, "NO ", 3) == 0)
 		return (DIR_NORTH);
-	if (ft_strncmp(identifier, "SO ", 3) == 0)
+	else if (ft_strncmp(identifier, "SO ", 3) == 0)
 		return (DIR_SOUTH);
-	if (ft_strncmp(identifier, "WE ", 3) == 0)
+	else if (ft_strncmp(identifier, "WE ", 3) == 0)
 		return (DIR_WEST);
-	if (ft_strncmp(identifier, "EA ", 3) == 0)
+	else if (ft_strncmp(identifier, "EA ", 3) == 0)
 		return (DIR_EAST);
-	return (-1);
+	else 
+		return (-1);
 }
 
 double	ft_abs(double x)

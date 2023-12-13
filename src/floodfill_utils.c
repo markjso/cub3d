@@ -54,7 +54,7 @@ int	do_file(char *path)
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
 	{
-		perror ("file: ");
+		error_mess("No such file or directory");
 	}
 	return (fd);
 }

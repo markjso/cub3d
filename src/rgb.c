@@ -25,6 +25,8 @@ int	*save_rgb(char *identifier, char *rgb_code)
 	rgb = malloc(sizeof(int) * 3);
 	rgb_code = rgb_code + ft_strlen(identifier);
 	rgb_split = ft_split(rgb_code, ',');
+	if (ft_strlen(rgb_split[0]) == 0 || rgb_split[1] == NULL || rgb_split[2] == NULL || rgb_split[3] != NULL)
+		error_mess("rgb format error");
 	rgb[0] = ft_atoi(rgb_split[0]);
 	rgb[1] = ft_atoi(rgb_split[1]);
 	rgb[2] = ft_atoi(rgb_split[2]);
