@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rgb.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmount <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: rmount <rmount@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 13:53:05 by jmarks            #+#    #+#             */
-/*   Updated: 2023/12/14 16:37:34 by rmount           ###   ########.fr       */
+/*   Updated: 2023/12/15 09:53:04 by rmount           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ int	*save_rgb(char *identifier, char *rgb_code)
 
 	rgb = malloc(sizeof(int) * 3);
 	rgb_code = rgb_code + ft_strlen(identifier);
-	rgb_code = ft_strtrim(rgb_code, "\n");
 	rgb_split = ft_split(rgb_code, ',');
 	free_temp_string(rgb_split);
 	if (is_format_error(rgb_split))
