@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   elements.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmount <rmount@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rmount <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 14:05:55 by jmarks            #+#    #+#             */
-/*   Updated: 2023/12/11 13:52:15 by rmount           ###   ########.fr       */
+/*   Updated: 2023/12/14 16:40:32 by rmount           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,6 @@ void	set_textures(t_mlx *cube, t_elements elements, char *line, int dir)
 
 	height = TEX_HEIGHT;
 	width = TEX_WIDTH;
-	printf("dir is %d\n", dir);
-	if (dir == -1)
-		error_mess("invalid texture identifier");
 	if (elements.wall_tex[dir].img != NULL)
 		error_mess("texture already set");
 	line += 2;
@@ -104,12 +101,10 @@ t_elements	parse_elements(t_mlx *cube, char *path)
 			set_textures(cube, elements, tmp, dir_from_id(tmp));
 		if (tmp[0] == 'C' || tmp[0] == 'F')
 			set_colour(&elements, tmp);
-		free(tmp);	
+		free(tmp);
 		free(line);
 	}
 	close(fd);
 	check_elements(elements);
 	return (elements);
 }
-
-

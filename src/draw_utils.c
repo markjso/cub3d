@@ -32,7 +32,6 @@ char	**ft_strsjoin(char **strs, char *str)
 	return (new_strs);
 }
 
-
 void	get_pixel_colour(t_mlx *cube, int x, int y, int rgb)
 {
 	char	*dst;

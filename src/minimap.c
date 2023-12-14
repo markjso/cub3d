@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minimap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmarks <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: rmount <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:44:54 by jmarks            #+#    #+#             */
-/*   Updated: 2023/12/13 15:45:04 by jmarks           ###   ########.fr       */
+/*   Updated: 2023/12/14 16:04:51 by rmount           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../inc/cub3d.h"
 
 static void	draw_square(t_mlx *cube, int x, int y, int colour)
 {
@@ -42,7 +42,7 @@ void	draw_minimap(t_mlx *cube)
 		while (++j < ft_strlen(cube->map.map[i]))
 		{
 			if (cube->map.map[i][j] == '1')
-				draw_square(cube, j * MINIMAP_MULT + 10 , i * MINIMAP_MULT + 10,
+				draw_square(cube, j * MINIMAP_MULT + 10, i * MINIMAP_MULT + 10,
 					create_rgb(0, 0, 0));
 			if (cube->map.map[i][j] == '0')
 				draw_square(cube, j * MINIMAP_MULT + 10, i * MINIMAP_MULT + 10,

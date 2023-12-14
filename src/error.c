@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmount <rmount@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rmount <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 14:07:34 by jmarks            #+#    #+#             */
-/*   Updated: 2023/12/11 13:09:42 by rmount           ###   ########.fr       */
+/*   Updated: 2023/12/14 16:39:21 by rmount           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,6 @@ void	error_mess(char *msg)
 {
 	printf("Error\n%s\n", msg);
 	exit(EXIT_FAILURE);
-}
-
-void	ft_free_map(t_mlx *cube)
-{
-	int	i;
-
-	i = -1;
-	while (++i < cube->map.height)
-		free(cube->map.map[i]);
-	free(cube->map.map);
 }
 
 void	ft_clean_arr(char **arr)
@@ -64,7 +54,7 @@ void	free_textures(t_mlx *cube)
 int	quit(char *msg, t_mlx *cube)
 {
 	printf("Error\n%s\n", msg);
-	// ft_clean_arr(cube->map.map);
+	ft_clean_arr(cube->map.map);
 	free_textures(cube);
 	if (cube->win)
 	{

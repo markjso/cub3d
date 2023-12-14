@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmount <rmount@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rmount <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 15:30:46 by jmarks            #+#    #+#             */
-/*   Updated: 2023/12/11 14:46:14 by rmount           ###   ########.fr       */
+/*   Updated: 2023/12/14 16:03:22 by rmount           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,13 +88,9 @@ void	perform_dda(t_mlx *cube)
 			ray->wall_hit = 1;
 	}
 	if (!ray->side)
-	{
 		ray->perp_wall_dist = ray->side_dist_x - ray->delta_dist_x;
-	}
 	else
-		{
 		ray->perp_wall_dist = ray->side_dist_y - ray->delta_dist_y;
-		}
 }
 
 static void	calc_line_height(t_mlx *cube)

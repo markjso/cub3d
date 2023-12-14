@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmount <rmount@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rmount <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 14:07:47 by jmarks            #+#    #+#             */
-/*   Updated: 2023/12/11 14:41:03 by rmount           ###   ########.fr       */
+/*   Updated: 2023/12/14 16:36:10 by rmount           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	read_map(t_map *map, int fd)
 {
 	char		*line;
 	char		*tmp;
-	int 		map_started;
+	int			map_started;
 
 	map_started = 0;
 	while (1)
@@ -42,8 +42,7 @@ void	read_map(t_map *map, int fd)
 			map_started = 1;
 		if (map_started && (tmp[0] != '1' && tmp[0] != '0'))
 			error_mess("Map content must be at the end of the file");
-		free(line);
-		check_valid_line(tmp);
+		check_valid_line(tmp, line);
 		if (map_started)
 		{
 			map->map = ft_strsjoin(map->map, ft_strdup(tmp));
@@ -59,7 +58,7 @@ void	ft_normalise_width(t_map map)
 {
 	int	i;
 	int	j;
-	
+
 	i = 0;
 	while (i < map.height)
 	{
@@ -96,10 +95,10 @@ bool	ft_map_valid(t_map map)
 {
 	if (!validate_chr(map))
 		return (false);
-	// if (!map_can_be_exited(map))
-	// {
-	// 	error_mess("Map is not closed in by walls.");
-	// 	return (false);
-	// }
+	if (map_can_be_exited(map))
+	{
+		error_mess("Map is not closed in by walls.");
+		return (false);
+	}
 	return (true);
 }

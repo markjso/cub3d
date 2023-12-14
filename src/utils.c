@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmount <rmount@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rmount <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 14:48:17 by jmarks            #+#    #+#             */
-/*   Updated: 2023/12/11 13:10:47 by rmount           ###   ########.fr       */
+/*   Updated: 2023/12/14 16:38:06 by rmount           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	dir_from_id(char *identifier)
 		return (DIR_WEST);
 	else if (ft_strncmp(identifier, "EA ", 3) == 0)
 		return (DIR_EAST);
-	else 
+	else
 		return (-1);
 }
 
@@ -67,6 +67,3 @@ double	ft_abs(double x)
 		return (-x);
 	return (x);
 }
-
-
-

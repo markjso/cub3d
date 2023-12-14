@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmount <rmount@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rmount <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 16:50:38 by jibanez-          #+#    #+#             */
-/*   Updated: 2023/12/11 13:51:38 by rmount           ###   ########.fr       */
+/*   Updated: 2023/12/14 16:53:52 by rmount           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@
 # include "../mlx/mlx.h"
 # include <sys/wait.h>
 # include "../libft/libft.h"
-
 
 # define UP 13
 # define DOWN 1
@@ -52,7 +51,7 @@
 **	=============
 */
 
-typedef struct s_mlx  t_mlx;
+typedef struct s_mlx	t_mlx;
 
 typedef struct s_player
 {
@@ -135,7 +134,7 @@ typedef struct s_mlx
 **	Initialise
 */
 t_mlx		*init_mlx(char *filepath);
-t_raycast	init_raycast();
+t_raycast	init_raycast(void);
 
 /*
 **	Parse
@@ -150,10 +149,11 @@ int			do_file(char *path);
 */
 int			check_file_format(char *file, char *file_format);
 bool		validate_chr(t_map map);
-void		validate_map(t_mlx *cube);
-bool		check_valid_line(char *line);
-void		check_walls(t_map map);
-bool		ft_is_valid_map_char(char c);
+//void		validate_map(t_mlx *cube);
+bool		check_valid_line(char *line, char *delete);
+//void		check_walls(t_map map);
+//bool		ft_is_valid_map_char(char c);
+void		ft_free_map(t_mlx *cube);
 
 /*
 ** Floodfill
@@ -192,6 +192,9 @@ t_elements	parse_elements(t_mlx *cube, char *path);
 void		ft_raycast(t_mlx *cube);
 int			create_rgb(int r, int g, int b);
 int			*save_rgb(char *identifier, char *rgb_code);
+bool		is_colour_empty(char *rgb_code);
+void		free_temp_string(char **rgb_split);
+bool		is_format_error(char **rgb_split);
 
 /*
 **	Error handling
