@@ -16,6 +16,7 @@ SRC =		src/parse.c \
 			src/raycast.c \
 			src/cub3d.c \
 			src/initialise.c \
+			src/minimap.c \
 			src/utils.c \
 			src/draw_utils.c
 	
@@ -29,7 +30,7 @@ LIBFT=libft/libft.a
 
 LIBFT_LIB_DIR = libft
 
-CFLAGS=-Wall -Wextra -Werror -Iinc/ -Ilibft/ -Imlx
+CFLAGS=-Wall -Wextra -Werror -Iinc/ -Ilibft/ -Imlx -g -O0
 
 MLX_FLAGS = -Lmlx -lmlx -framework OpenGL -framework AppKit
 

@@ -6,7 +6,7 @@
 /*   By: rmount <rmount@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 14:07:34 by jmarks            #+#    #+#             */
-/*   Updated: 2023/12/11 15:29:35 by rmount           ###   ########.fr       */
+/*   Updated: 2023/12/15 10:47:07 by rmount           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,30 @@ void	ft_clean_arr(char **arr)
 	arr = NULL;
 }
 
+void	free_textures(t_mlx *cube)
+{
+	if (!cube->elements.wall_tex)
+		return ;
+	if (cube->elements.wall_tex[DIR_NORTH].img)
+		mlx_destroy_image(cube->mlx,
+			cube->elements.wall_tex[DIR_NORTH].img);
+	if (cube->elements.wall_tex[DIR_SOUTH].img)
+		mlx_destroy_image(cube->mlx,
+			cube->elements.wall_tex[DIR_SOUTH].img);
+	if (cube->elements.wall_tex[DIR_EAST].img)
+		mlx_destroy_image(cube->mlx,
+			cube->elements.wall_tex[DIR_EAST].img);
+	if (cube->elements.wall_tex[DIR_WEST].img)
+		mlx_destroy_image(cube->mlx,
+			cube->elements.wall_tex[DIR_WEST].img);
+	free(cube->elements.wall_tex);
+}
+
 int	quit(char *msg, t_mlx *cube)
 {
 	printf("Error\n%s\n", msg);
 	ft_clean_arr(cube->map.map);
+	free_textures(cube);
 	if (cube->win)
 	{
 		mlx_clear_window(cube->mlx, cube->win);
@@ -46,11 +66,12 @@ int	quit(char *msg, t_mlx *cube)
 
 int	leave(t_mlx *cube)
 {
-	ft_clean_arr(cube->map.map);
 	if (cube->win)
 	{
 		mlx_clear_window(cube->mlx, cube->win);
 		mlx_destroy_window(cube->mlx, cube->win);
 	}
+	ft_free_map(cube);
+	free_textures(cube);
 	exit(EXIT_SUCCESS);
 }

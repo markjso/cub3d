@@ -12,17 +12,6 @@
 
 #include "../inc/cub3d.h"
 
-void	init_map(t_map *map)
-{
-	map->height = 0;
-	map->width = 0;
-	map->player_x = 0;
-	map->player_y = 0;
-	map->player_dir = 0;
-	map->p_element = 0;
-	map->valid = false;
-}
-
 t_raycast	init_raycast(void)
 {
 	t_raycast	ray;

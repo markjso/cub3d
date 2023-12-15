@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmount <rmount@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rmount <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/28 16:50:38 by jibanez-          #+#    #+#             */
-/*   Updated: 2023/12/11 13:51:38 by rmount           ###   ########.fr       */
+/*   Created: 2023/12/14 20:56:18 by rmount            #+#    #+#             */
+/*   Updated: 2023/12/14 20:56:23 by rmount           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@
 # include <sys/wait.h>
 # include "../libft/libft.h"
 
-
 # define UP 13
 # define DOWN 1
 # define LEFT 0
@@ -44,6 +43,7 @@
 # define DIR_EAST		3
 # define MOVE_SPEED 0.125
 # define ROT_SPEED 0.075
+# define MINIMAP_MULT 10
 
 /*
 **	=============
@@ -51,7 +51,7 @@
 **	=============
 */
 
-typedef struct s_mlx  t_mlx;
+typedef struct s_mlx	t_mlx;
 
 typedef struct s_player
 {
@@ -131,18 +131,16 @@ typedef struct s_mlx
 */
 
 /*
-**	Main
+**	Initialise
 */
 t_mlx		*init_mlx(char *filepath);
-t_raycast	init_raycast();
+t_raycast	init_raycast(void);
 
 /*
 **	Parse
 */
-void		read_map(t_map *map, int fd);
-void		scan_map(t_mlx *cube, char *line);
+void		ft_normalise_width(t_map map);
 t_map		map_parser(char *path);
-t_elements	parse_elements(t_mlx *cube, char *path);
 bool		ft_map_valid(t_map map);
 int			do_file(char *path);
 
@@ -151,19 +149,21 @@ int			do_file(char *path);
 */
 int			check_file_format(char *file, char *file_format);
 bool		validate_chr(t_map map);
-void		validate_map(t_mlx *cube);
-int			check_valid_line(char *line);
-void		check_walls(t_map map);
+//void		validate_map(t_mlx *cube);
+bool		check_valid_line(char *line, char *delete);
+//void		check_walls(t_map map);
+//bool		ft_is_valid_map_char(char c);
+void		ft_free_map(t_mlx *cube);
 
 /*
 ** Floodfill
 */
-bool	map_can_be_exited(t_map map);
-bool	fl_visited_boundary(bool **visited, t_map map);
-void	fl_init_visited(bool **visited, t_map map);
-void	floodfill(t_map map, bool **visited, int i, int j);
-void	fl_find_player(t_map map, int *sr, int *sc);
-void	fl_free(bool **visited, t_map map);
+bool		map_can_be_exited(t_map map);
+bool		fl_visited_boundary(bool **visited, t_map map);
+void		fl_init_visited(bool **visited, t_map map);
+void		floodfill(t_map map, bool **visited, int i, int j);
+void		fl_find_player(t_map map, int *sr, int *sc);
+void		fl_free(bool **visited, t_map map);
 
 /*
 **	Move
@@ -175,7 +175,10 @@ int			keypress(int keycode, t_mlx *cube);
 */
 int			dir_from_id(char *identifier);
 double		ft_abs(double x);
-// char	*ft_free_to_trim(char *s1, const char *set);
+char		*ft_free_to_trim(char *s1, const char *set);
+int			ft_strslen(char **strs);
+char		**ft_strsjoin(char **strs, char *str);
+char		*ft_strjoin_and_free(char *s1, char *s2);
 
 /*
 **	Draw
@@ -185,9 +188,13 @@ int			ft_mlx_pixel_put(t_mlx *cube, int x, int y);
 int			img_renderer(t_mlx *cube);
 void		draw_floor_ceiling(t_mlx *cube, int x, int from);
 void		draw_textures(t_mlx *cube, int x);
+t_elements	parse_elements(t_mlx *cube, char *path);
 void		ft_raycast(t_mlx *cube);
 int			create_rgb(int r, int g, int b);
 int			*save_rgb(char *identifier, char *rgb_code);
+bool		is_colour_empty(char *rgb_code);
+void		free_temp_string(char **rgb_split);
+bool		is_format_error(char **rgb_split);
 
 /*
 **	Error handling
@@ -206,10 +213,9 @@ t_player	init_player(t_map map);
 /*
 **	Map
 */
-int			ft_add_str_to_arr(char *str, t_mlx *cube);
-void		init_map(t_map *map);
-void		get_width(t_map *map);
+t_map		init_map(void);
 char		*get_next_line(int fd);
 int			is_dir_char(char letter);
+void		draw_minimap(t_mlx *cube);
 
 #endif

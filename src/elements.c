@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   elements.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmount <rmount@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rmount <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 14:05:55 by jmarks            #+#    #+#             */
-/*   Updated: 2023/12/11 13:52:15 by rmount           ###   ########.fr       */
+/*   Updated: 2023/12/14 16:40:32 by rmount           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	init_elements(t_elements *elements)
 static void	check_elements(t_elements elements)
 {
 	if (elements.ceiling == -1 || elements.floor == -1)
-		error_mess("missing color");
+		error_mess("missing colour");
 	if (elements.wall_tex[DIR_NORTH].img == NULL)
 		error_mess("missing north texture");
 	if (elements.wall_tex[DIR_SOUTH].img == NULL)
@@ -39,7 +39,7 @@ static void	check_elements(t_elements elements)
 		error_mess("missing east texture");
 }
 
-static void	set_textures(t_mlx *cube, t_elements elements, char *line, int dir)
+void	set_textures(t_mlx *cube, t_elements elements, char *line, int dir)
 {
 	void	*image;
 	int		height;
@@ -47,12 +47,12 @@ static void	set_textures(t_mlx *cube, t_elements elements, char *line, int dir)
 
 	height = TEX_HEIGHT;
 	width = TEX_WIDTH;
-	if (dir == -1)
-		error_mess("invalid texture identifier");
 	if (elements.wall_tex[dir].img != NULL)
 		error_mess("texture already set");
 	line += 2;
 	line = ft_strtrim(line, " \t\n");
+	if (check_file_format(line, ".xpm"))
+		error_mess("Incorrect texture file format, must be .xpm");
 	image = mlx_xpm_file_to_image(cube->mlx, line, &width, &height);
 	free(line);
 	if (!image)
@@ -62,11 +62,9 @@ static void	set_textures(t_mlx *cube, t_elements elements, char *line, int dir)
 			&elements.wall_tex[dir].bits_per_pixel, \
 			&elements.wall_tex[dir].line_length, \
 			&elements.wall_tex[dir].endian);
-	if (!elements.wall_tex[dir].addr)
-		error_mess("mlx_get_data_addr failed");
 }
 
-static void	set_color(t_elements *elements, char *line)
+void	set_colour(t_elements *elements, char *line)
 {
 	int	*rgb;
 
@@ -88,25 +86,23 @@ t_elements	parse_elements(t_mlx *cube, char *path)
 {
 	int			fd;
 	char		*line;
+	char		*tmp;
 	t_elements	elements;
 
 	init_elements(&elements);
 	fd = do_file(path);
-	line = get_next_line(fd);
-	while (line)
+	while (1)
 	{
-		line = ft_strtrim(line, "\n\t");
-		if (is_dir_char(line[0]))
-		{
-			if (check_file_format(line, ".xpm"))
-				error_mess("Incorrect texture file format, must be .xpm");
-			else
-				set_textures(cube, elements, line, dir_from_id(line));
-		}
-		if (line[0] == 'C' || line[0] == 'F')
-			set_color(&elements, line);
-		free(line);
 		line = get_next_line(fd);
+		if (!line)
+			break ;
+		tmp = ft_strtrim(line, " \t");
+		if (is_dir_char(tmp[0]))
+			set_textures(cube, elements, tmp, dir_from_id(tmp));
+		if (tmp[0] == 'C' || tmp[0] == 'F')
+			set_colour(&elements, tmp);
+		free(tmp);
+		free(line);
 	}
 	close(fd);
 	check_elements(elements);
