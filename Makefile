@@ -2,25 +2,48 @@ NAME = cub3D
 
 MLX_DIR = mlx
 
-SRC =		src/parse.c \
-			src/rgb.c \
-			src/elements.c \
-			src/checks.c \
-			src/draw.c \
-			src/error.c \
-			src/floodfill.c \
-			src/floodfill_utils.c \
-			src/get_next_line.c \
-			src/player.c \
-			src/movement.c \
-			src/raycast.c \
-			src/cub3d.c \
-			src/initialise.c \
-			src/minimap.c \
-			src/utils.c \
-			src/draw_utils.c
-	
-OBJS=$(SRC:.c=.o)
+SRC_M			= parse.c \
+			rgb.c \
+			elements.c \
+			checks.c \
+			draw.c \
+			error.c \
+			floodfill.c \
+			floodfill_utils.c \
+			get_next_line.c \
+			player.c \
+			movement.c \
+			raycast.c \
+			cub3d.c \
+			initialise.c \
+			utils.c \
+			draw_utils.c
+SRC_M_D=$(addprefix mandatory/,$(SRC_M))
+
+SRC_B		= parse_bonus.c \
+			rgb_bonus.c \
+			elements_bonus.c \
+			checks_bonus.c \
+			draw_bonus.c \
+			error_bonus.c \
+			floodfill_bonus.c \
+			floodfill_utils_bonus.c \
+			get_next_line_bonus.c \
+			player_bonus.c \
+			movement_bonus.c \
+			raycast_bonus.c \
+			cub3d_bonus.c \
+			initialise_bonus.c \
+			utils_bonus.c \
+			minimap_bonus.c \
+			draw_utils_bonus.c
+SRC_BONUS_D=$(addprefix bonus/,$(SRC_B))
+
+SRC_DIR=$(addprefix src/,$(SRC_M_D))
+BONUS_SRC=$(addprefix src/,$(SRC_BONUS_D))
+
+OBJS=$(SRC_DIR:.c=.o)
+BONUS_OBJS=$(BONUS_SRC:.c=.o)
 
 CC=gcc
 
@@ -30,7 +53,7 @@ LIBFT=libft/libft.a
 
 LIBFT_LIB_DIR = libft
 
-CFLAGS=-Wall -Wextra -Werror -Iinc/ -Ilibft/ -Imlx -g -O0
+CFLAGS=-Wall -Wextra -Werror -Iinc/ -Ilibft/ -Imlx
 
 MLX_FLAGS = -Lmlx -lmlx -framework OpenGL -framework AppKit
 
@@ -51,10 +74,13 @@ ${MLX}:
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
+bonus: $(OBJS) $(BONUS_OBJS) $(LIBFT) $(MLX)
+	$(CC) $(CFLAGS) -o $(NAME) $(BONUS_OBJS) $(MLX_FLAGS) $(LIBFT) $(MLX)
+
 clean:
 	make clean -C $(LIBFT_LIB_DIR) 
 	make clean -C $(MLX_DIR) 
-	rm -f $(OBJS)
+	rm -f $(OBJS) $(BONUS_OBJS)
 
 fclean:	clean
 	make fclean -C $(LIBFT_LIB_DIR) 

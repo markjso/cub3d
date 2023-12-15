@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/cub3d.h"
+#include "../inc/cub3d_bonus.h"
 
 void	draw_floor_ceiling(t_mlx *cube, int x, int from)
 {
