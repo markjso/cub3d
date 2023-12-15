@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUB3D_H
-# define CUB3D_H
+#ifndef CUB3D_BONUS_H
+# define CUB3D_BONUS_H
 
 # include <math.h>
 # include <stdio.h>
@@ -43,6 +43,7 @@
 # define DIR_EAST		3
 # define MOVE_SPEED 0.125
 # define ROT_SPEED 0.075
+# define MINIMAP_MULT 10
 
 /*
 **	=============
@@ -148,7 +149,10 @@ int			do_file(char *path);
 */
 int			check_file_format(char *file, char *file_format);
 bool		validate_chr(t_map map);
+//void		validate_map(t_mlx *cube);
 bool		check_valid_line(char *line, char *delete);
+//void		check_walls(t_map map);
+//bool		ft_is_valid_map_char(char c);
 void		ft_free_map(t_mlx *cube);
 
 /*
@@ -171,6 +175,7 @@ int			keypress(int keycode, t_mlx *cube);
 */
 int			dir_from_id(char *identifier);
 double		ft_abs(double x);
+char		*ft_free_to_trim(char *s1, const char *set);
 int			ft_strslen(char **strs);
 char		**ft_strsjoin(char **strs, char *str);
 char		*ft_strjoin_and_free(char *s1, char *s2);
@@ -211,5 +216,6 @@ t_player	init_player(t_map map);
 t_map		init_map(void);
 char		*get_next_line(int fd);
 int			is_dir_char(char letter);
+void		draw_minimap(t_mlx *cube);
 
 #endif
